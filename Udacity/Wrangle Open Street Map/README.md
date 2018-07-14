@@ -7,3 +7,6 @@ The main file with most of the functions is '<b>Wrangle Open Street Map Data - M
 The Python code extracts the XML code from the OSM (Open Street Map) file, fixes human-errors in the code, writes the data to CSV files, creates an SQL database, and then adds the data from the CSV files into the database. After that analysis is not only easier, but also more accurate.<br />
 
 In order to make this code work, one will need to have Python installed as well as Jupyter Notebook. Which both can be installed automatically with Anaconda. The database used in this project is SQLite3 and it should be installed for a full experience of the code. Otherwise, if you only want to look at the code and the analysis without changing the code, you should open any of the .md files. The 'Complete' one is recommended.
+
+Files included in this project:
+1. 
