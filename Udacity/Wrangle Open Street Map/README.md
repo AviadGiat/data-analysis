@@ -9,4 +9,12 @@ The Python code extracts the XML code from the OSM (Open Street Map) file, fixes
 In order to make this code work, one will need to have Python installed as well as Jupyter Notebook. Which both can be installed automatically with Anaconda. The database used in this project is SQLite3 and it should be installed for a full experience of the code. Otherwise, if you only want to look at the code and the analysis without changing the code, you should open any of the .md files. The 'Complete' one is recommended.
 
 Files included in this project:
-1. 
+1. Inspect - That is where I am doing thte inspection, audit and fixing of teh data.
+2. Analyze - In this file I fix the data again and analyze it using SQL and Pandas.
+3. Complete - Both files above's code together.
+4. database.py - A python file to build database of the CSV files with the repective table names.
+5. mountain-view.osm = s snippet from the Mountain View XML data.
+6. nodes_tags.csv, ways.csv, ways_nodes.csv, ways_tags.csv, nodes.csv - THe files that we create from the XML file and convert to database.
+7. schema.py - Schema of the desired data structure
+
+
