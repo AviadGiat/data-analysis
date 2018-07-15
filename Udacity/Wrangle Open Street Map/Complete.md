@@ -6,8 +6,8 @@
 
 I chose to do this project on the city of Mountain View, CA, where I currently live with my wife and two kids. I believe I will be able to learn more about my city using this dataset. I will be inspecting the OSM (XML) file to get a glimpse of how the dataset looks like, including sample lists of the street names, users contributing to the map in the city and what kind of street types we have in Mountain View.
 After inspecting, I will audit the OSM file, find issues with the street names and zip codes that will potentially make the analysis results inaccurate, correct the issues with Python before converting the clean data to the tabular format, CSV.
-CSV files will be used to create data structures, which will then be used in a SQL database.
-I will do my analysis of the city on this SQL database.
+CSV files will be used to create data structures, which will then be used in an SQL database.
+Lastly, I will do some analysis of the city on this SQL database using SQL queries and Pandas data frame.
 
 #### About MV
 The California city of Mountain View, situated between the San Francisco Bay and the Santa Cruz Mountains, lies 10 miles north of San Jose and 35 miles south of San Francisco. Neighbouring cities include Palo Alto, Los Altos, and Sunnyvale. The city has 80,000 residents and its spread over 12 square miles.
