@@ -665,7 +665,7 @@ print(correct_zip_codes)
     {'94040', '94043', '94041'}
     
 
-We can see from the above results that most of the wrong zip codes are coming from neighboring cities. This is simply because the downloaded OSM file's data was taken as a square, rather following the city's boundries. This is going to be fixed below, among other fixes.
+We can see from the above results that most of the wrong zip codes are coming from neighboring cities. This is going to be fixed below, among other fixes.
 
 <a id="problems2" name=""></a>
 # Problems with Zip Codes
