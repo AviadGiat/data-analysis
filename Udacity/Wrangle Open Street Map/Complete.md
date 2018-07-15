@@ -481,7 +481,7 @@ Also, change the 'Easst El Cmino Real, to 'East El Camino Real.
 ## Other possible issues with the street names validity
 
 Maybe there are more misspelled and missing charachters at the beginning of the street name that did not come up in the above auditing process...<br />
-Those can be 'N', 'S', 'N.' or 'S.' and 'E.', which should be a full word like North, South, West and East.<br />
+Those can be 'N', 'S', 'N.' and 'S.', which should be a full word like North, South, West and East.<br />
 
 <a id="improve1" name=""></a>
 # Improve street names
