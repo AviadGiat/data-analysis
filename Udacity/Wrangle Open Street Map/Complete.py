@@ -14,11 +14,11 @@
 # #### About MV
 # The California city of Mountain View, situated between the San Francisco Bay and the Santa Cruz Mountains, lies 10 miles north of San Jose and 35 miles south of San Francisco. Neighbouring cities include Palo Alto, Los Altos, and Sunnyvale. The city has 80,000 residents and its spread over 12 square miles.
 
-# In[55]:
+# In[1]:
 
 
 from IPython.display import Image
-Image(filename='images/mountain_view.png')
+Image(filename='mountain_view.png')
 
 
 # <a id="top" name=""></a>

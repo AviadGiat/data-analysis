@@ -15,7 +15,7 @@ The California city of Mountain View, situated between the San Francisco Bay and
 
 ```python
 from IPython.display import Image
-Image(filename='/images/mountain_view.png')
+Image(filename='mountain_view.png')
 ```
 
 
