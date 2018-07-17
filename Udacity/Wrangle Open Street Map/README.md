@@ -22,3 +22,14 @@ Files and folders included in this project:
 
 The Github link to the project's depository is:
 https://github.com/AviadGiat/data-analysis/tree/master/Udacity/Wrangle%20Open%20Street%20Map
+
+<div><span style="font-size: 13px;"># Resources for this project:</span></div>
+
+<div><a href="https://www.udacity.com/course/data-analyst-nanodegree--nd002"><span style="font-size: 13px;">Udacity Data Analysis Nano-Degree</span></a></div>
+
+<div><a href="https://www.openstreetmap.org/#map=13/37.4001/-122.0749"><span style="font-size: 13px;">Open Street Map</span></a></div>
+
+<div><span style="font-size: 13px;"><a href="https://www.google.com/maps/@37.4134391,-122.1513082,12z">Google maps</a><br />
+stackoverflow.com discussions related to Python</span></div>
+
+<div><span style="font-size: 13px;">Udacity students like, <a href="https://github.com/pratyush19/Udacity-Data-Analyst-Nanodegree/tree/master/P3-OpenStreetMap-Wrangling-with-SQL">pratyush19</a>, <a href="https://medium.com/@williamkoehrsen/data-wrangling-with-python-and-sqlite-900d21bc5a53">William Koehrsen</a>, <a href="http://www.yannispappas.com/Wrangle-OpenStreetMap-Data/">Yannis Pappas</a> and others.</span></div>
