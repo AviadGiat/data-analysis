@@ -23,7 +23,7 @@ Files and folders included in this project:
 The Github link to the project's depository is:
 https://github.com/AviadGiat/data-analysis/tree/master/Udacity/Wrangle%20Open%20Street%20Map
 
-<div><span style="font-size: 13px;"># Resources for this project:</span></div>
+# Resources for this project:
 
 <div><a href="https://www.udacity.com/course/data-analyst-nanodegree--nd002"><span style="font-size: 13px;">Udacity Data Analysis Nano-Degree</span></a></div>
 
