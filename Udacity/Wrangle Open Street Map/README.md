@@ -19,3 +19,6 @@ Files and folders included in this project:
 8. schema.py - Schema of the desired data structure.
 9. Images - folder with images
 10. readme - this file
+
+The Github link to the project's depository is:
+https://github.com/AviadGiat/data-analysis/tree/master/Udacity/Wrangle%20Open%20Street%20Map
