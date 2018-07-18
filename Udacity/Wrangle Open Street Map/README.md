@@ -2,7 +2,7 @@
 #### Data Wrangling course at Udacity - part of the Data Analyst Nano-Degree
 This project started with downloading a custom square area from https://www.openstreetmap.org.<br />
 
-The submission file for this project, is '<b><i>Complete</i>.py</b>'. It encompases code from two different files: ('<b><i>Inspect (Audit)</i>.py</b>' and '<b><i>Analyze (CSV and SQL)</i>.py</b>'). As their name goes, the '<b>Inspect</b>' file deals with the audit and improvement of the data, whereas the '<b>Analyze</b>' file deals with both fixing issues with the data and analyzing the data. For better experience with reading the project, I added Markdown files (.md) to have an easier read of the Python files.<br />
+The submission file for this project, is '<b><i>Complete</i>.py</b>'. It encompases code from two different files: ('<b><i>Inspect (Audit)</i>.py</b>' and '<b><i>Analyze (CSV and SQL)</i>.py</b>'). As their name goes, the '<b>Inspect</b>' file deals with the audit and improvement of the data, whereas the '<b>Analyze</b>' file deals with both fixing issues with the data and analyzing the data. For better experience with reading the project, I added Markdown files (.md) to have an easier read of the Python files. So, the submission file is '<b><i>Complete</i>.md</b>'<br />
 
 The programming language for this project is Python and the database used is SQLite3.
 
