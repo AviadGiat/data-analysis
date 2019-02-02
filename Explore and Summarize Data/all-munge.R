@@ -284,8 +284,7 @@ finance <- finance[-toBeRemoved,]
 
 # Change the date column to POSIXct and re-organize the order of the components
 finance$date <- parse_date_time(finance$date, orders = c("dmy"))
-# Add a column with the month of the contribution
-
+# finance$date <- as.Date(finance$date)
 
 ###########################################
 ##               ZIPCODES                ##
@@ -311,6 +310,9 @@ finance$state<- sapply(finance$state, tolower)
 
 # Remove NAs from the dataset
 finance <- finance[complete.cases(finance), ]
+
+# Remove the non-contiguous states
+finance <- subset(finance, !(state %in% c("alaska", "hawaii", "puerto rico")))
 
 
 ###########################################
