@@ -862,9 +862,9 @@ Interesting to see in the above graph the end of each line, which looks like it 
 #### <strong>A map with the sum of contributions by state and by city</strong>
 ```{r finance_map_states_cities, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 warnings()
-
-################################################################################
-## STATE GEO
+# 
+# ################################################################################
+# ## STATE GEO
 
 # Upload the geographic data from a shape file downloaded from census.gove
 # https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html
@@ -928,7 +928,7 @@ cities_local$city <- sapply(cities_local$city, tolower)
 cities_local$zipcode <- as.character(cities_local$zipcode)
 
 
-################################################################################
+# ################################################################################
 # MERGE LOCAL AND GEO AND GROUP BY CITY
 
 cities <- left_join(cities_local, cities_geo, by = c("city", "state"))
@@ -943,7 +943,7 @@ cities <- cities %>%
   arrange(desc(count)) %>%
   unique()
 cities_geo1 <- st_as_sf(cities)
-
+#
 ################################################################################
 ## PLOT DYNAMIC MAP USING SIMPLE FEATURES AND TMAP
 
@@ -976,14 +976,11 @@ states <- tm_shape(states) +
   tm_legend(show=FALSE)
 tmap_mode("view")
 states
-tmap_save(states, "contrib_map_states_cities.html")
-class(states$amount)
-cities_geo1
-cities_geo
-cities
+# tmap_save(states, "contrib_map_states_cities.html")
+# <iframe src="contrib_map_states_cities.html", width = 90%, height = 400></iframe><br><br>
+
 ```
-<iframe src="contrib_map_states_cities.html", width = 90%, height = 400></iframe><br><br>
-Leading the state contributions are California with $160M, New York with $130M, Texas with $85M and Florida with $62M. As far as cities, Palm Beach pops up first with the size of the red dot and the dark color. Did the amount contributed from each state reflect the size of its population? Let's take a look at it with 2 charts. In further investigation here I would add few variables, like gender and party, and try to find hints for relationships between all  variables.<br><br>
+<br>Leading the state contributions are California with $160M, New York with $130M, Texas with $85M and Florida with $62M. As far as cities, Palm Beach pops up first with the size of the red dot and the dark color. Did the amount contributed from each state reflect the size of its population? Let's take a look at it with 2 charts. In further investigation here I would add few variables, like gender and party, and try to find hints for relationships between all  variables.<br><br>
 
 
 #### <strong>Is there a correlation between the state's population and number of contributions? </strong>
