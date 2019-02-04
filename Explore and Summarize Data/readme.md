@@ -18,6 +18,3 @@ contrib_map_states_cities.html - an interactive map with the states and the citi
 finance_date_cand.html - an interactive plot with the aggregated sum of contributions candidates received on a time scale.<br>
 readme.MD - this file<br>
 
-Naturally, the challenging part and the part that took the longest time to accomplish was the data wrangling. Here is some of the 'heavy lifting' I did with the 'all-munge.R' file:<br>
-I Changed a few of the variable names; shortened the candidates names to have only their last name; restricted the data to only the primaries and general elections of 2016; removed all the donated amounts that had minus (-); added a column to represent the candidate party affiliation; Added a column with the gender of the contributor based on a pre-defined database that I downloaded to my computer; added a new column with the day and the year, extracted from the contributions' date column; which, all in all, ended up as a better-orgnized dataset to work with when doing the EDA.<br>
-
