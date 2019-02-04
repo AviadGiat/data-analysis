@@ -54,7 +54,7 @@ library(totalcensus)
 ####################################################################
 
 # Set working directory
-setwd('C:/Users/Aviad/Google Drive/Git-Workflow/data-analysis/Explore and Summarize Data')
+setwd('C:/Users/Aviad/Google Drive/Studies/Data Analysis/6 - EDA/Final Project/2016 Elections Finance')
 
 # Read the CSV file
 finance <- fread("finance.csv")
@@ -98,17 +98,20 @@ knitr::include_graphics("2016 elections finance.jpg")
 ```
 <center>(Cartoon by DonkeyHotey&nbsp;<a href="https://www.flickr.com/photos/47422005@N04/">via Flickr</a>.)</center><br>
 
-### <strong>Introduction</srong>
+### <strong>Introduction</strong>
 
-In this EDA (Exploratory Data Analysis) project I will explore a dataset of the 2016 elections' financial contributions, while examining its structure, variable, patterns and relationships between those variables. 
-I will start with few one-variable explorations, check their distributions and then move to find relationships between two or more variables.<br>
-The data in this project was taken from the <a href="https://classic.fec.gov/disclosurep/PDownload.do">fcc.gov</a> website. It includes all individual campaign contributins for the 2016 presidential elections and contributions from authorized committees.<br><br>
-The first variable will be the 'amount' variable, which is the money a contributor donated to one or more of the candidates and is the only vector in the downloaded dataset that is not a character, rather a numeric vector.<br>
-!Important to note that the 'finance' dataset uploaded here was 'munged' in a different file called 'all-munge.R'. 
+In this EDA (Exploratory Data Analysis) project I will explore a dataset of the 2016 elections' financial contributions, while examining its structure, variable, patterns and relationships between those variables.<br>
+
+My goal with this project is to find interesting insights that could lead to further investigations.<br> 
+I will start with exploring few one-variable distributions, compare them against the 'amount' variable and try to find interesting patterns and relationships between those variables.<br>
+
+The data in this project was taken from the <a href="https://classic.fec.gov/disclosurep/PDownload.do">fcc.gov</a> website. It includes all individual campaign contributins for the 2016 presidential elections and contributions from authorized committees.<br>
+
 The original dataset had 19 columns, which I found some of them less interesting for the scope of this project, so I removed them.<br>
-I also, in this file ('all-munge.R'): <br>
-Changed a few of the variable names; shortened the candidates names to have only their last name; restricted the data to only the primaries and general elections of 2016; removed all the donated amounts that had minus (-); added a column to represent the candidate party affiliation; Added a column with the gender of the contributor based on a pre-defined database that I downloaded to my computer; added a new column with the day and the year, extracted from the contributions' date column; which, all in all, ended up as a better orgnized dataset to work with when doing the EDA.<br>
 
+!Important to note that the 'finance' dataset uploaded here was 'munged' in a different file called 'all-munge.R', which can be found in the root folder of this project on <a href="https://github.com/AviadGiat/data-analysis/tree/master/Explore%20and%20Summarize%20Data">Github</a>. You can read more about the structure of this project in the readme.MD file, which is located in the root folder as well.<br>
+
+The first variable to explore will be the 'amount' variable, which is the money a contributor donated to one or more of the candidates and is the only vector in the downloaded dataset that is not a character, rather a numeric vector.<br>
 
 First, lets take a look at the dataset, get familiar with the variables and ask questions about the data.
 
@@ -142,7 +145,8 @@ finance_summary <- finance_summary %>%
 summary(finance_summary)
 
 ```
-Many different interesting points about the data can be seen in the above table. It seems that Hillary Clinton, under the 'candidate' column, had the highest number of occurrences, followed by Bernie Sanders and Donald Trump. Did she also lead with the total amount of contributions and not only the number of contributions?<br>
+Many different interesting points about the data can be seen in the above table and act as a 'trailhead' for investigative avenues. Let's look at few of them:<br>
+It seems that Hillary Clinton, under the 'candidate' column, had the highest number of occurrences, followed by Bernie Sanders and Donald Trump. Did she also lead with the total amount of contributions and not only the number of contributions?<br>
 Other things we can see in this first glance at the dataset with the number of distributions are:<br>
 New York is the leading city with 204,204 contributions; California is the leading state with highest number of contributions (1,294,446); Retired people take the first and second places with number of contributions under the 'occupation' and 'employer' variables; The Democratic party had about 4 times more contributions than the Republican party (5,556,219 / 1,786,731); The amounts donated to all parties started from few cents and reached 4,904,861, which was made by a single contributor. I wonder who that was.<br>
 I will focus on only few of the questions and variables above in the scope of this project and drill down where there is a need to understand better the distributions and connections between the variables.<br><br>
@@ -273,6 +277,79 @@ print(tbl_df(cand_distr), n=25)
 ```
 Hillary Clinton received 48% of the total contributions, followed by Bernie Sanders with 27% and then Donald Trump with only 10% of the total contributions in both the primaries and the general elections. Hillary Clinton received 4.5 times more contributions than Donald Trump, yet it did not help her to win the race.<br><br>
 
+
+### <strong>Occupation</strong>
+
+#### <strong>Which occupation gave most donations?</strong>
+```{r occupation, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+finance_occupation <- finance
+
+finance_occupation <- finance_occupation %>%
+  group_by(occupation) %>%
+  summarise(number = n(), sum = sum(amount)) %>%
+  mutate(percent = round(number/sum(number) * 100, 1)) %>%
+  filter(number > 50000) %>%
+  arrange(desc(number))
+
+finance_occupation
+```
+<br>This chart above cannot tells us much since there are about 120,000 occupations that donors added to their contribution forms. The text in the field was open to insert any characters without restriction, thus many occupations were writen many times in different variations<br>
+In order to analyze this facet of the dataset, we will have to write an algorithm that searches for similar terms and combine them together.<br>
+Nevertheless, in the above chart the percent of retired donors is pretty impressive, compare to them being 14.5% of the population in 2016.<br>
+Also interesting to see here is the high percent of donors who filled 'unemployed' at that time. I would think unemployed people won't have the money to donate, but they did, in their ten thousands.<br><br>
+
+
+#### <strong>Contributions by occupation (above 50,000 contributions)</strong>
+```{r contrib_by_occupatino, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+
+library(grid)
+ggplot(data = finance_occupation, aes(x = reorder(occupation, number), 
+                                      y = number, fill = occupation)) +
+  geom_bar(stat = "identity") +
+  ylab("Number of contributions") +
+  xlab("Occupation") +
+  geom_text(aes(x = occupation, y = number + .5,    # nudge above top of bar
+                  label = paste0(percent, '%')), hjust = +0.5,
+            position=position_dodge(), vjust=-0.25) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+        legend.position="none") +
+  scale_y_continuous(expand = c(0.15,0))
+
+```
+<br><br> 
+
+### <strong>Gender</strong>
+
+#### <strong>Who contributed more in those elections, men or women?</strong>
+```{r gender_distr, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+# Number of contributions per gender
+gender_distr <- group_by(finance, gender)
+gender_count <- gender_distr
+gender_count <- summarise(gender_distr, contributions = n())
+
+# Plot
+ggplot(data=gender_count, aes(x=gender, y=contributions, fill = gender)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(labels = comma)
+ggsave('men and women contributions.png')
+```
+<br>Women had a slight lead with the number of contributions.<br><br>
+
+#### <strong>Male and female contributions in numbers</strong>
+```{r gender_count, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+# Number of contributions per gender
+gender_count
+```
+Women contributed 3,712,479 times and men contributed 3,661,116 time.
+Interesting to note here that women also voted more than men in those elections. not only contributed more.
+By the Center for American Women and Politics, since 1964, women voted more than men in every election.
+```{r women_men_vote_img, echo=FALSE, , cache=TRUE, fig.cap="Source: Center for American Women and Politics", out.width = '100%'}
+knitr::include_graphics("women_men_vote.jpg")
+
+```
+<br>Why did women vote or contributed more than men? Maybe it is related to the <a href="https://www.kff.org/other/state-indicator/distribution-by-gender/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">fact</a> that there were 51% women and 49% men in the US in 2016? That is a very interesting question to study in <a href="http://oxfordre.com/politics/view/10.1093/acrefore/9780190228637.001.0001/acrefore-9780190228637-e-71">further research</a> about women involvemnt in political issues, which, unfortunatelly, is out of the scope of this project..<br><br>
+
+## Two variable exploration<br><br>
 
 #### <strong>Sum of contributions and percent per candidate</strong>
 ```{r cand_amount, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
@@ -503,81 +580,7 @@ ggplot(data = extreme_contibutors, aes(x= reorder(candidate, -sum_count), y = su
 ```
 <br>Hilary Clinton was ahead of everyone else with more than 200K of 'extreme contributions', followed by Sanders with 75K. The number at the top of the bars is the average number of repeating contributors per extreme donor.
 
-
-### <strong>Occupation</strong>
-
-#### <strong>Which occupation gave most donations?</strong>
-```{r occupation, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-finance_occupation <- finance
-
-finance_occupation <- finance_occupation %>%
-  group_by(occupation) %>%
-  summarise(number = n(), sum = sum(amount)) %>%
-  mutate(percent = round(number/sum(number) * 100, 1)) %>%
-  filter(number > 50000) %>%
-  arrange(desc(number))
-
-finance_occupation
-```
-<br>This chart above cannot tells us much since there are about 120,000 occupations that donors added to their contribution forms. The text in the field was open to insert any characters without restriction, thus many occupations were writen many times in different variations<br>
-In order to analyze this facet of the dataset, we will have to write an algorithm that searches for similar terms and combine them together.<br>
-Nevertheless, in the above chart the percent of retired donors is pretty impressive, compare to them being 14.5% of the population in 2016.<br>
-Also interesting to see here is the high percent of donors who filled 'unemployed' at that time. I would think unemployed people won't have the money to donate, but they did, in their ten thousands.<br><br>
-
-
-#### <strong>Contributions by occupation</strong>
-```{r contrib_by_occupatino, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-
-library(grid)
-ggplot(data = finance_occupation, aes(x = reorder(occupation, number), 
-                                      y = number, fill = occupation)) +
-  geom_bar(stat = "identity") +
-  ylab("Number of contributions") +
-  xlab("Occupation") +
-  geom_text(aes(x = occupation, y = number + .5,    # nudge above top of bar
-                  label = paste0(percent, '%')), hjust = +0.5,
-            position=position_dodge(), vjust=-0.25) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
-        legend.position="none") +
-  ggtitle("Contributions per occupation (above 50,000)") +
-  scale_y_continuous(expand = c(0.15,0))
-
-
-
-```
-<br><br> 
-
-### <strong>Gender</strong>
-
-#### <strong>Who contributed more in those elections, men or women?</strong>
-```{r gender_distr, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-# Number of contributions per gender
-gender_distr <- group_by(finance, gender)
-gender_count <- gender_distr
-gender_count <- summarise(gender_distr, contributions = n())
-
-# Plot
-ggplot(data=gender_count, aes(x=gender, y=contributions, fill = gender)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = comma)
-ggsave('men and women contributions.png')
-```
-<br>Women had a slight lead with the number of contributions.<br><br>
-
-#### <strong>Male and female contributions in numbers</strong>
-```{r gender_count, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-# Number of contributions per gender
-gender_count
-```
-Women contributed 3,712,479 times and men contributed 3,661,116 time.
-Interesting to note here that women also voted more than men in those elections. not only contributed more.
-By the Center for American Women and Politics, since 1964, women voted more than men in every election.
-```{r women_men_vote_img, echo=FALSE, , cache=TRUE, fig.cap="Source: Center for American Women and Politics", out.width = '100%'}
-knitr::include_graphics("women_men_vote.jpg")
-
-```
-<br>Why did women vote or contributed more than men? Maybe it is related to the <a href="https://www.kff.org/other/state-indicator/distribution-by-gender/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">fact</a> that there were 51% women and 49% men in the US in 2016? That is a very interesting question to study in <a href="http://oxfordre.com/politics/view/10.1093/acrefore/9780190228637.001.0001/acrefore-9780190228637-e-71">further research</a> about women involvemnt in political issues, which, unfortunatelly, is out of the scope of this project..<br><br>
-
+## Two variable explorations<br>
 
 ### <strong>Date</strong>
 
@@ -605,7 +608,7 @@ ggplot(data=finance_date, aes(x=date, y=total)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 
 ```
-Red and blue lines, respectivly, are the Republican and Democratic primaries and the green line is the general election.<br>
+<br>Red and blue lines, respectivly, are the Republican and Democratic primaries and the green line is the general election.<br>
 
 People started to donate already in 2014, but in very small numbers, as can be seen further down. Most of the donors started contributing in early 2015 and until November 2016. Some kept on giving even after the elections, but it died after January 2017. We can see a steady built-up of the amount donated leading to the highest amounts given in the months and days before the general election. 
 There was a pick of contributions between February and June of 2016 and a drop right after. This might be the related to the Republican and Democratic primaries that took place between January 1st 2016 and Jan 15th 2016. <br><br>
@@ -633,82 +636,6 @@ Zooming in on the fartherst left side of the graph, we can see that there were c
 Another very interesting pattern is revealed when zooming in to a month level. The sum of donations for the last day(s) of each month had a sharp increase in donations, compare to the rest of the month and can be seen as the spikes along the x axis.<br>
 Let's take a look at the early donations and who received them.<br><br>
 
-## Two variable explorations
-
-### <strong>Election type</strong>
-
-#### <strong>Facet contributions and dates by election type (General and Primaries)</strong>
-```{r finance_date_type, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-finance_date_type <-  finance
-# finance_date_type$date <- as.Date(finance_date_type$date)
-finance_date_type <- finance_date_type %>%
-  group_by(candidate, date, amount, election_tp) %>%
-  summarise(total = sum(amount))
-
-# Plot
-ggplot(data=finance_date_type, aes(x=date, y=total)) +
-  geom_bar(stat='identity') +
-  scale_y_log10() +
-  scale_x_date(date_labels = "%b - %Y", date_breaks = "3 month",
-                 limits = as.Date(c('2015-01-01','2017-01-01'))) +
-  scale_y_continuous(labels=comma, limits = c(0, 7000000))+
-  geom_vline(xintercept = as.numeric(as.Date("2016-06-01")), 
-             linetype=4, color = "red") +
-  geom_vline(xintercept = as.numeric(as.Date("2016-06-07")), 
-             linetype=4, color = "blue") +
-  geom_vline(xintercept = as.numeric(as.Date("2016-11-08")), 
-             linetype=4, color = "green") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_wrap(~election_tp)
-
-```
-<br>Now, looking at the distribution of the donations, the voting pattern looks clearer. Donations were mostly given prior to an election. The assumption that the contributions peak we saw in the previous plot between February and June 2016 is related to the primaries, was correct.<br><br>
-
-
-#### <strong>Number of contributions by gender and party in numbers and in a plot</strong>
-```{r count_contrib_party, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-# toBeRemoved <- which(finance$gender=="either")
-# finance <- finance[-toBeRemoved,]
-
-count_contrib_party <- finance %>%
-  group_by(party, gender) %>%
-  summarise(num_contrib = n())%>%
-  arrange(desc(num_contrib))
-count_contrib_party
-```
-
-
-#### <strong>Contributions by party overtime</strong>
-```{r finance_date_party, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-finance_date_party <-  finance
-# finance_date_party$date <- as.Date(finance_date_party$date)
-finance_date_party <- finance_date_party %>%
-  group_by(candidate, date, amount, party) %>%
-  summarise(total = sum(amount))
-
-# Plot
-ggplot(data=finance_date_party, aes(x=date, y=total)) +
-  geom_bar(stat='identity') +
-  scale_y_log10() +
-  scale_x_date(date_labels = "%b - %Y", date_breaks = "3 month",
-                 limits = as.Date(c('2015-01-01','2017-01-01'))) +
-  scale_y_continuous(labels=comma, limits = c(0, 7000000))+
-  geom_vline(xintercept = as.numeric(as.Date("2016-06-01")), 
-             linetype=4, color = "red") +
-  geom_vline(xintercept = as.numeric(as.Date("2016-06-07")), 
-             linetype=4, color = "blue") +
-  geom_vline(xintercept = as.numeric(as.Date("2016-11-08")), 
-             linetype=4, color = "green") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_wrap(~party)
-
-# Boxplot
-# ggplot(aes(x = party, y = amount, fill = party), data = finance_date_party) + geom_boxplot() +
-# theme(plot.title = element_text(size = 16), axis.text = element_text(size = 12), axis.title = element_text(size = 12,face = "bold")) + ylab("Contribution Amount") + xlab("Party") + ggtitle("Boxplot of Contribution Amount by Party") + scale_fill_manual(values = c("blue", "green", "white", "red")) +
-#   scale_y_log10()
-
-```
-<br>Looking at the above faceted data, the trend we saw earlier with growing contributions over time and closer to the general elections, is missing from the Republican party. There actually seems to be trend down towards the General elections, on the Republican side.
 
 ### <strong>Party/Gender</strong>
 
@@ -781,6 +708,82 @@ ggsave('clinton and trump contributions by genders.png')
 ```
 <br>Women donated to Clinton 1.5 times more than men, and man donated to Trump 1.7 time more than women.
 It seems that the gender's role with contributions to those two candidates was pretty dominant.<br><br>
+
+
+## Multi-variable exploration<br>
+
+### <strong>Election type</strong>
+
+#### <strong>Facet contributions and dates by election type (General and Primaries)</strong>
+```{r finance_date_type, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+finance_date_type <-  finance
+# finance_date_type$date <- as.Date(finance_date_type$date)
+finance_date_type <- finance_date_type %>%
+  group_by(candidate, date, amount, election_tp) %>%
+  summarise(total = sum(amount))
+
+# Plot
+ggplot(data=finance_date_type, aes(x=date, y=total)) +
+  geom_bar(stat='identity') +
+  scale_y_log10() +
+  scale_x_date(date_labels = "%b - %Y", date_breaks = "3 month",
+                 limits = as.Date(c('2015-01-01','2017-01-01'))) +
+  scale_y_continuous(labels=comma, limits = c(0, 7000000))+
+  geom_vline(xintercept = as.numeric(as.Date("2016-06-01")), 
+             linetype=4, color = "red") +
+  geom_vline(xintercept = as.numeric(as.Date("2016-06-07")), 
+             linetype=4, color = "blue") +
+  geom_vline(xintercept = as.numeric(as.Date("2016-11-08")), 
+             linetype=4, color = "green") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_wrap(~election_tp)
+
+```
+<br>Now, looking at the distribution of the donations, the voting pattern looks clearer. Donations were mostly given prior to an election. The assumption that the contributions peak we saw in the previous plot between February and June 2016 is related to the primaries, was correct.<br><br>
+
+
+#### <strong>Number of contributions by gender and party in numbers and in a plot</strong>
+```{r count_contrib_party, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+
+count_contrib_party <- finance %>%
+  group_by(party, gender) %>%
+  summarise(num_contrib = n())%>%
+  arrange(desc(num_contrib))
+count_contrib_party
+```
+
+
+#### <strong>Contributions by party overtime</strong>
+```{r finance_date_party, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+finance_date_party <-  finance
+# finance_date_party$date <- as.Date(finance_date_party$date)
+finance_date_party <- finance_date_party %>%
+  group_by(candidate, date, amount, party) %>%
+  summarise(total = sum(amount))
+
+# Plot
+ggplot(data=finance_date_party, aes(x=date, y=total)) +
+  geom_bar(stat='identity') +
+  scale_y_log10() +
+  scale_x_date(date_labels = "%b - %Y", date_breaks = "3 month",
+                 limits = as.Date(c('2015-01-01','2017-01-01'))) +
+  scale_y_continuous(labels=comma, limits = c(0, 7000000))+
+  geom_vline(xintercept = as.numeric(as.Date("2016-06-01")), 
+             linetype=4, color = "red") +
+  geom_vline(xintercept = as.numeric(as.Date("2016-06-07")), 
+             linetype=4, color = "blue") +
+  geom_vline(xintercept = as.numeric(as.Date("2016-11-08")), 
+             linetype=4, color = "green") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  facet_wrap(~party)
+
+# Boxplot
+# ggplot(aes(x = party, y = amount, fill = party), data = finance_date_party) + geom_boxplot() +
+# theme(plot.title = element_text(size = 16), axis.text = element_text(size = 12), axis.title = element_text(size = 12,face = "bold")) + ylab("Contribution Amount") + xlab("Party") + ggtitle("Boxplot of Contribution Amount by Party") + scale_fill_manual(values = c("blue", "green", "white", "red")) +
+#   scale_y_log10()
+
+```
+<br>Looking at the above faceted data, the trend we saw earlier with growing contributions over time and closer to the general elections, is missing from the Republican party. There actually seems to be trend down towards the General elections, on the Republican side.
 
 
 
@@ -861,183 +864,185 @@ Interesting to see in the above graph the end of each line, which looks like it 
 
 #### <strong>A map with the sum of contributions by state and by city</strong>
 ```{r finance_map_states_cities, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-warnings()
 # 
 # ################################################################################
 # ## STATE GEO
-
-# Upload the geographic data from a shape file downloaded from census.gove
-# https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html
-us_states <- read_shape("us_states/cb_2017_us_state_20m.shp",
-                        as.sf = TRUE, stringsAsFactors = FALSE)
-colnames(us_states)[colnames(us_states) == "NAME"] <- "state"
-us_states$state <- sapply(us_states$state, tolower)
-
-################################################################################
-## STATE POPULATION
-
-# Upload a dataset with the states population from census.gov
-# https://www.census.gov/data/datasets/time-series/demo/popest/2010s-national-total.html
-us_population <- read_csv("national_population.csv")
-us_population$state <- sapply(us_population$state, tolower)
-
-################################################################################
-## STATE LOCAL
-
-# The sample size is 14 times smaller than the population, hence the '*14' below
-finance_states <- finance %>%
-  group_by(state) %>%
-  summarise(average = mean(amount), sum = sum(amount),
-            count = length(amount), contributors = length(unique(contributor))) %>%
-  unique()
-
-################################################################################
-## MERGE STATES LOCAL AND POPULATION
-
-finance_pop_state <- merge(finance_states, us_population,
-                           by = "state", all.x=TRUE)
-
-################################################################################
-## MERGE STATE LOCAL-POPULATION WITH STATE GEO
-
-finance_states_merged <- merge(finance_pop_state, us_states, by = "state")
-finance_states_merged <- subset(finance_states_merged,
-                                !(state %in% c("alaska", "hawaii",
-                                               "puerto rico")))
-
-
-################
-
-
-################################################################################
-## CITIES GEO
-
-cities_geo <- read.csv("uscitiesv1.4.csv", stringsAsFactors=FALSE)
-colnames(cities_geo)[colnames(cities_geo) == "state_name"] <- "state"
-colnames(cities_geo)[colnames(cities_geo) == "zips"] <- "zipcode"
-cities_geo$state <- sapply(cities_geo$state, tolower)
-cities_geo$city <- sapply(cities_geo$city, tolower)
-
-################################################################################
-## CITIES LOCAL
-
-# Create a new dataframe for cities
-cities_local <- finance
-cities_local$zipcode <- as.character(cities_local$zipcode)
-cities_local$city <- sapply(cities_local$city, tolower)
-cities_local$zipcode <- as.character(cities_local$zipcode)
-
-
+# 
+# # Upload the geographic data from a shape file downloaded from census.gove
+# # https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html
+# us_states <- read_shape("us_states/cb_2017_us_state_20m.shp",
+#                         as.sf = TRUE, stringsAsFactors = FALSE)
+# colnames(us_states)[colnames(us_states) == "NAME"] <- "state"
+# us_states$state <- sapply(us_states$state, tolower)
+# 
 # ################################################################################
-# MERGE LOCAL AND GEO AND GROUP BY CITY
-
-cities <- left_join(cities_local, cities_geo, by = c("city", "state"))
-cities <- cities[complete.cases(cities), ]
-cities <- subset(cities, !(state %in% c("alaska", "hawaii", "puerto rico")))
-cities <- st_as_sf(cities, coords = c("lng", "lat"),crs = 4326, agr = "constant")
-cities$population <- as.numeric(cities$population)
-cities <- cities %>%
-  group_by(city, state, population) %>%
-  summarise(average = round(mean(amount), 0), sum = round(sum(amount), 0),
-            count = length(amount)) %>%
-  arrange(desc(count)) %>%
-  unique()
-cities_geo1 <- st_as_sf(cities)
-#
-################################################################################
-## PLOT DYNAMIC MAP USING SIMPLE FEATURES AND TMAP
-
-states = st_as_sf(finance_states_merged)
-states <- tm_shape(states) +
-  tm_fill("sum", title = "Sum By State", breaks = c(500000, 1000000,
-                                                    2000000, 6000000,
-                                                   10000000, 20000000, 60000000,
-                                                   100000000, 160000000),
-          popup.vars=c("sum", "average", "count", "population"),
-          style = "fixed", palette = "BuGn", alpha = 0.3) +
-  tm_borders() +
-  tm_view(alpha = 0.9, basemaps = "OpenStreetMap") +
-  tm_layout(title = "2016 Elections contributions by state",
-            main.title.size = 5)+
-  tm_legend(show=FALSE) +
-  # Dots plotting from here
-  tm_shape(cities_geo1) +
-  tm_dots(size.lim=c(10, 2e7), col = "sum", size = "sum", title = "US Cities",
-          palette="YlOrBr", contrast=1,
-          breaks = c(1000, 10000, 50000, 100000,
-                     500000, 1000000, 5000000,
-                     10000000, 50000000, 100000000), scale = 2/1,
-          legend.max.symbol.size = 0.3,
-          popup.vars=c("sum", "average", "count")) +
-  tm_view(alpha = 0.7, basemaps = "OpenStreetMap", set.zoom.limits = c(4, 16)) +
-  tm_layout(title = "2016 Elections contributions by state and city",
-            main.title.size = 5, legend.hist.size = 0.5,
-            legend.outside = T) +
-  tm_legend(show=FALSE)
-tmap_mode("view")
-states
+# ## STATE POPULATION
+# 
+# # Upload a dataset with the states population from census.gov
+# # https://www.census.gov/data/datasets/time-series/demo/popest/2010s-national-total.html
+# us_population <- read_csv("national_population.csv")
+# us_population$state <- sapply(us_population$state, tolower)
+# 
+# ################################################################################
+# ## STATE LOCAL
+# 
+# # The sample size is 14 times smaller than the population, hence the '*14' below
+# finance_states <- finance %>%
+#   group_by(state) %>%
+#   summarise(average = mean(amount), sum = sum(amount),
+#             count = length(amount), contributors = length(unique(contributor))) %>%
+#   unique()
+# 
+# ################################################################################
+# ## MERGE STATES LOCAL AND POPULATION
+# 
+# finance_pop_state <- merge(finance_states, us_population,
+#                            by = "state", all.x=TRUE)
+# 
+# ################################################################################
+# ## MERGE STATE LOCAL-POPULATION WITH STATE GEO
+# 
+# finance_states_merged <- merge(finance_pop_state, us_states, by = "state")
+# finance_states_merged <- subset(finance_states_merged,
+#                                 !(state %in% c("alaska", "hawaii",
+#                                                "puerto rico")))
+# 
+# 
+# ################
+# 
+# 
+# ################################################################################
+# ## CITIES GEO
+# 
+# cities_geo <- read.csv("uscitiesv1.4.csv", stringsAsFactors=FALSE)
+# colnames(cities_geo)[colnames(cities_geo) == "state_name"] <- "state"
+# colnames(cities_geo)[colnames(cities_geo) == "zips"] <- "zipcode"
+# cities_geo$state <- sapply(cities_geo$state, tolower)
+# cities_geo$city <- sapply(cities_geo$city, tolower)
+# 
+# ################################################################################
+# ## CITIES LOCAL
+# 
+# # Create a new dataframe for cities
+# cities_local <- finance
+# cities_local$zipcode <- as.character(cities_local$zipcode)
+# cities_local$city <- sapply(cities_local$city, tolower)
+# cities_local$zipcode <- as.character(cities_local$zipcode)
+# 
+# 
+# ################################################################################
+# # MERGE LOCAL AND GEO AND GROUP BY CITY
+# 
+# cities <- left_join(cities_local, cities_geo, by = c("city", "state"))
+# cities <- cities[complete.cases(cities), ]
+# cities <- subset(cities, !(state %in% c("alaska", "hawaii", "puerto rico")))
+# cities <- st_as_sf(cities, coords = c("lng", "lat"),crs = 4326, agr = "constant")
+# cities$population <- as.numeric(cities$population)
+# cities <- cities %>%
+#   group_by(city, state, population) %>%
+#   summarise(average = round(mean(amount), 0), sum = round(sum(amount), 0),
+#             count = length(amount)) %>%
+#   arrange(desc(count)) %>%
+#   unique()
+# cities_geo1 <- st_as_sf(cities)
+# 
+# ################################################################################
+# ## PLOT DYNAMIC MAP USING SIMPLE FEATURES AND TMAP
+# 
+# states = st_as_sf(finance_states_merged)
+# states <- tm_shape(states) +
+#   tm_fill("sum", title = "Sum By State", breaks = c(500000, 1000000,
+#                                                     2000000, 6000000,
+#                                                    10000000, 20000000, 60000000,
+#                                                    100000000, 160000000),
+#           popup.vars=c("sum", "average", "count"),
+#           style = "fixed", palette = "BuGn", alpha = 0.3) +
+#   tm_borders() +
+#   tm_view(alpha = 0.9, basemaps = "OpenStreetMap") +
+#   tm_layout(title = "2016 Elections contributions by state",
+#             main.title.size = 5)+
+#   tm_legend(show=FALSE) +
+#   # Dots plotting from here
+#   tm_shape(cities_geo1) +
+#   tm_dots(size.lim=c(10, 2e7), col = "sum", size = "sum", title = "US Cities",
+#           palette="YlOrBr", contrast=1,
+#           breaks = c(1000, 10000, 50000, 100000,
+#                      500000, 1000000, 5000000,
+#                      10000000, 50000000, 100000000), scale = 2/1,
+#           legend.max.symbol.size = 0.3,
+#           popup.vars=c("sum", "average", "count")) +
+#   tm_view(alpha = 0.7, basemaps = "OpenStreetMap", set.zoom.limits = c(4, 16)) +
+#   tm_layout(title = "2016 Elections contributions by state and city",
+#             main.title.size = 5, legend.hist.size = 0.5,
+#             legend.outside = T) +
+#   tm_legend(show=FALSE)
+# tmap_mode("view")
+# states
 # tmap_save(states, "contrib_map_states_cities.html")
-# <iframe src="contrib_map_states_cities.html", width = 90%, height = 400></iframe><br><br>
 
 ```
-<br>Leading the state contributions are California with $160M, New York with $130M, Texas with $85M and Florida with $62M. As far as cities, Palm Beach pops up first with the size of the red dot and the dark color. Did the amount contributed from each state reflect the size of its population? Let's take a look at it with 2 charts. In further investigation here I would add few variables, like gender and party, and try to find hints for relationships between all  variables.<br><br>
+<iframe src="contrib_map_states_cities.html", width = 90%, height = 400></iframe><br><br>
+Leading the state contributions are California with $160M, New York with $130M, Texas with $85M and Florida with $62M. As far as cities, Palm Beach pops up first with the size of the red dot and the dark color. Did the amount contributed from each state reflect the size of its population? Let's take a look at it with 2 charts. In further investigation here I would add few variables, like gender and party, and try to find hints for relationships between all  variables.<br><br>
 
 
 #### <strong>Is there a correlation between the state's population and number of contributions? </strong>
 ```{r correlation_plot1, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-library(ggplot2)
-library(GGally) # For ggpairs
-library(dplyr)
-finance_relation_pop_count <- finance_states_merged
-
-finance_relation_pop_count <- finance_relation_pop_count %>%
-  group_by(state, population, "contributions"=count, "total"=sum, average = mean(sum)) %>%
-  summarise(percent = round(count/population*100, 0)) %>%
-  arrange(desc(contributions))
-
-finance_relation_pop_count <- finance_relation_pop_count[, c(1:6)]
-
-finance_relation_pairs <- finance_relation_pop_count
-finance_relation_pairs_1 <- finance_relation_pop_count
-
-finance_relation_pairs_1$state <- NULL
-finance_relation_pairs$state <- NULL
-
-finance_relation_pairs <- ggpairs(finance_relation_pairs, title = "Correlation between financial contributions and state population") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        cardinality_threshold = NULL)
-finance_relation_pairs
-
-# saveWidget(finance_relation_pairs, "correlations btn population n contributions.html")
-ggsave('correlations btn population n contributions1.png')
+# library(ggplot2)
+# library(GGally) # For ggpairs
+# library(dplyr)
+# finance_relation_pop_count <- finance_states_merged
+# 
+# finance_relation_pop_count <- finance_relation_pop_count %>%
+#   group_by(state, population, "contributions"=count, "total"=sum, average = mean(sum)) %>%
+#   summarise(percent = round(count/population*100, 0)) %>%
+#   arrange(desc(contributions))
+# 
+# finance_relation_pop_count <- finance_relation_pop_count[, c(1:6)]
+# 
+# finance_relation_pairs <- finance_relation_pop_count
+# finance_relation_pairs_1 <- finance_relation_pop_count
+# 
+# finance_relation_pairs_1$state <- NULL
+# finance_relation_pairs$state <- NULL
+# 
+# finance_relation_pairs <- ggpairs(finance_relation_pairs, title = "Correlation between financial contributions and state population") +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1),
+#         cardinality_threshold = NULL)
+# finance_relation_pairs
+# 
+# # saveWidget(finance_relation_pairs, "correlations btn population n contributions.html")
+# ggsave('correlations btn population n contributions1.png')
 # <img src="correlations btn population n contributions1.png" />
+knitr::include_graphics("correlations btn population n contributions1.png")
 ```
 <br>We can see that there is a very strong correlation (0.935) between the number of contributions per state and the number of citizens in this state. In a further investigation I would analyze the correlation between cities and their financial contributions to the different parties.<br><br>
 
 
 ### Reflection
 
-Exploring 2016 elections' finances dataset and describing my findings in numbers, plots and maps was a great challange! I enjoyed very much practing and learning new things in R and its built-in and external packages for data exploration, like plyr, dplyr,  ggplot2, data.table and others. The work on this dataset also taught me a lot of things I was not aware of, despite them being publically available and me being an avid follower of politics. 
+Exploring 2016 elections' finances dataset and describing my findings in numbers, plots and maps was a great challange! This was a great opportunity to practice plotting with the built-in R and useful external packages, like plyr, dplyr,  ggplot2, data.table and others. <br>
+The work on this dataset also taught me a lot of things I was not aware of, despite them being publically available and me being an avid follower of politics. 
 
-I started the project with a dataset of California financial contributions, the state I live in, but found it lacking data that is available on the national level, knowing that I could always go back and drill down into the state's data. It seemed like more of a challange to work with the national dataset and it indeed was exactly that.
-
-Choosing to work with more than 7 million rows on a laptop was at the beginning very time consuming, but I found better ways and tools to work with for a given task to overcome the resource obstacle. For example, I experiencd issues with dplyr and knittr, so I moved to work with sqldf, which worked, but was much slower, and I ended up working with the built-in r function, as with the "Percent of contributions per gender" block above. By the time I ended this project I already made most of the work in the code with dplyr, for its straight-forward orientation. In order to improve the workflow, I also created a sample file, which I used, to run time-consuming code chunks on the Markdown file used to create this report.<br>
 
 #### Findings
 
+Data can be missleading if it is not connected to the real life events that produced the topic being investigated. For example, the clinton campaign had many contributions from many contributors coming in, represented by only one name (Hillary Victory Foundation). The 'contributor' HVF was an outlier that skewed the data by masking all those contributors. Nevertheless, to remove this 'contributor' from the dataset meant to remove also the sums of the donations that this line in the dataset encompases, which in this case was $43M, not a negligible amount, so I left it as it is and hacked my way around it. <br>
+
 ##### Trivial findings
-* Hillary Clinton lead all the way with the amount and number of contributions. What is not trivial, and surprising to many Americans and especially her campaign, is that the money did not buy them the White House.
+
+* Hillary Clinton lead all the way with the amount and number of contributions, which did not 'buy' her the White House.
 * Republican candidates outnumbered the rest of the parties.
 * The American political system is made out of 2 main parties and leaves small parties 'out of the game'.
 * $25 was the most frequent contribution.
 * Hillary Clinton relied on 'big donations' than small donations.
 * Men and women contributed more or less the same in those elections in general. 
 * There were hardly any contributions during the weekends compare to the week days and at the end of each month there was a spike with contributions.
-* Contributions started to come in as early as 2013
+* Contributions started to come in as early as 2013.
 * After Trump and Hillry's announcements more contributions came in.
-* Most of the general election's contributions came 4 months before
+* Most of the general election's contributions were given during the 4 months before election day, starting after the primaries ended and the final 2 candidates were chosen.
 
 ##### Surprising findings
+
 * Bernie Sanders had more contributions for the primaries than the presidential winner had throghout the entire election season. 
 * Hillary Clinton who received 48% of the constributions and 51% of the sum of all the contributions, while her opponent received only 10% of the contributions and 13% of the sum of all the contributions.
 * Hillary Clinton's campaign alegedly received $84M <a href ="illegal campaign contributions">illegal campaign contributions</a> from rich donors, who would not have been able to donate as much as $360K, if not this special 'arrangement' by the HVF and the DNC.
@@ -1047,17 +1052,19 @@ Bernie Sanders received more or less the same number of big and small contributi
 * Some people gave hundreds of times amounts and 3 even gave more than thousand times. Hillary Clinton lead this list with 201K repeating contributions, where Bernie Sanders followed by 78K.
 * Retired and unemployed people contributed more than everyone. Note that this facet of the analysis is not complete since the data in this column is far from being clean.
 * Contributions were given after the elections for a short while.
-* 
+*
 
-As far as exploring one, two and multi-variables, I found that it is necessary sometimes to add a two variable plot or explanation right after exploring one variable, for the sake of continuation and readability. Eample is the #1 multi-candidate contributor plot that drilled down on the list of contributors who donated to more than one candidate.
+#### Challanges
 
-Naturally, the challanging part and the part that took the longest time was the data wrangling, which I saved in a separate file called all-munge.R. This file outputs a clean dataset with all the 2016 elections' contributions, which saved me tons of time of running the entire script each time I closed the program (Rstudio) if when it crashed.
+I started the project with a dataset of California financial contributions, the state I live in, but found it lacking data that is available on the national level, knowing that I could always go back and drill down into the state's data. It seemed like more of a challange to work with the national dataset and it indeed was exactly that.
 
-Data can be missleading if it is not connected to the real life events that produced the topic being investigated. For example, the clinton campaign had many contributions from many contributors coming in, represented by only one name (Hillary Victory Foundation). The 'contributor' HVF was an outlier that skewed the data. On another hand, to remove this 'contributor' from te list means to remove the sums of the donations that this HVF encompases. For example, <br><br>
+Choosing to work with more than 7 million rows on a laptop was at the beginning very time consuming, but I found better ways and tools to work with for a given task to overcome the resource obstacle. For example, I experiencd issues with dplyr and knittr, so I moved to work with sqldf, which worked. Still slow, but worked. I worked with built-in r functions, as with the "Percent of contributions per gender" block above, but I ended up doing most of the code with dplyr, for its straight-forward orientation. In order to improve the workflow, I also created a sample file, which I used to run time-consuming code chunks.<br>
 
-External datasets. In order to complete missing information on the dataset, I used data from different sources. For the US population and states information, like zipcodes, longitude and latitude, I used <a href ="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-national-total.html">cencus.gov</a>. The cities data was taken from <a href ="https://simplemaps.com/data/us-cities">simplemaps.com</a>.<br><br>
+Removing and adding new variables. I found through this project that, on one hand, you want to minimize the length of columns for the sake of speed, and on the other hand, you find that those same variables can be meaningful further down the analysis. I had to go back and recreate the program, adding the old variables back to the dataset.<br>
 
-Removing and adding new variables. I found through this project that, on one hand, you want to minimize the length of columns for the sake of speed, and on the other hand, you find that those same variables can be meaningful farther down the analysis. I had to go back and recreate the program, adding the old variables back to the dataset.<br><br>
+Another challange was to choose which libraries to work with on the maps. In order to be able to map the distributions of variables on a map, I had to learn some new packages, like leaflet, tmap and ggmap.<br>
 
-If i'll need to do this project again I will use the Wine dataset. this dataset has 12 numeric vectors that are straight forward for correlation analysis, compare to 1 in the 2016 Elections dataset I explored here.
-Nevertheless, I enjoyed very much looking at the 2016 elections data and came up with some interesting points that I was not aware of.<br><br>
+#### Future exploration
+
+A very interesting topic to expore in further analysis would be donations VS votes in the 2016 elections and project it on the 2020 elections.<br>
+
