@@ -45,6 +45,7 @@ library(htmlwidgets)
 library(httpuv)
 library(plotly)
 library(totalcensus)
+library(DT)
 
 ```
 
@@ -105,9 +106,9 @@ In this EDA (Exploratory Data Analysis) project I will explore a dataset of the 
 My goal with this project is to find interesting insights that could lead to further investigations.<br> 
 I will start with exploring few one-variable distributions, compare them against the 'amount' variable and try to find interesting patterns and relationships between those variables.<br>
 
-The data in this project was taken from the <a href="https://classic.fec.gov/disclosurep/PDownload.do">fcc.gov</a> website. It includes all individual campaign contributins for the 2016 presidential elections and contributions from authorized committees.<br>
+The data in this project was taken from the <a href="https://classic.fec.gov/disclosurep/PDownload.do">fcc.gov</a> website. It includes all individual campaign contributions for the 2016 presidential elections and contributions from authorized committees.<br>
 
-The original dataset had 19 columns, which I found some of them less interesting for the scope of this project, so I removed them.<br>
+The original dataset had 19 columns, which I reduced to 14 in order to limit the scope of this project.<br>
 
 !Important to note that the 'finance' dataset uploaded here was 'munged' in a different file called 'all-munge.R', which can be found in the root folder of this project on <a href="https://github.com/AviadGiat/data-analysis/tree/master/Explore%20and%20Summarize%20Data">Github</a>. You can read more about the structure of this project in the readme.MD file, which is located in the root folder as well.<br>
 
@@ -116,11 +117,12 @@ The first variable to explore will be the 'amount' variable, which is the money 
 First, lets take a look at the dataset, get familiar with the variables and ask questions about the data.
 
 
-##### <strong>How many rows (individul contributions) and columns the dataset has?</strong>
+##### <strong>How many rows (individual contributions) and columns the dataset has?</strong>
 ```{r data_dim, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 dim(finance)
+names(finance)
 ```
-We can see above that now the data set has 7,372,235 million observations of contributions contributed, with 13 different columns that correspond to each observation. The columns are: 
+We can see above that now the data set has 7,299,993 million observations of contributions contributed, with 14 different columns that correspond to each observation. The columns' names meanings are: 
 
 "cand_id" - candidate ID<br>
 "candidate" - Candidate name<br>
@@ -132,9 +134,23 @@ We can see above that now the data set has 7,372,235 million observations of con
 "occupation" - Contributor occupation<br>
 "amount" - Amount contributed<br>
 "date" - Contribution transaction date<br>
+"tran_id" - The contribution transaction ID<br>
 "election_tp" - Election type (General or Primaries)<br>
 "party" - The political party of the candidate<br>
 "gender" - The contributor's gender<br><br>
+
+
+#### <strong>Example of a few lines from the dataset</strong>
+```{r row_example, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+library(DT)
+datatable(finance_sample, 
+          extensions = c('Buttons', 'FixedColumns', 'Responsive'), 
+          options = list(dom = 't', buttons = I('colvis'), scrollX = TRUE, 
+                         pageLength = 3, fixedHeader = TRUE, 
+                         fixedColumns = list(leftColumns = 0,
+                                             rightColumns = 1)))
+
+```
 
 
 #### <strong>Show basic statistics of the variables</strong>
@@ -145,10 +161,10 @@ finance_summary <- finance_summary %>%
 summary(finance_summary)
 
 ```
-Many different interesting points about the data can be seen in the above table and act as a 'trailhead' for investigative avenues. Let's look at few of them:<br>
+Many different interesting points about the data can be seen in the above table and act as a 'trailhead' for investigative avenues. Let's look at a few of them:<br>
 It seems that Hillary Clinton, under the 'candidate' column, had the highest number of occurrences, followed by Bernie Sanders and Donald Trump. Did she also lead with the total amount of contributions and not only the number of contributions?<br>
 Other things we can see in this first glance at the dataset with the number of distributions are:<br>
-New York is the leading city with 204,204 contributions; California is the leading state with highest number of contributions (1,294,446); Retired people take the first and second places with number of contributions under the 'occupation' and 'employer' variables; The Democratic party had about 4 times more contributions than the Republican party (5,556,219 / 1,786,731); The amounts donated to all parties started from few cents and reached 4,904,861, which was made by a single contributor. I wonder who that was.<br>
+New York is the leading city with 204,204 contributions; California is the leading state with the highest number of contributions (1,294,446); Retired people take the first and second places with a number of contributions under the 'occupation' and 'employer' variables; The Democratic party had about 4 times more contributions than the Republican party (5,556,219 / 1,786,731); The amounts donated to all parties started from few cents and reached 4,904,861, which was made by a single contributor. I wonder who that was.<br>
 I will focus on only few of the questions and variables above in the scope of this project and drill down where there is a need to understand better the distributions and connections between the variables.<br><br>
 
 
@@ -217,9 +233,9 @@ ggplot(data = finance_candidates, aes(x = candidate, y = sum, fill = party)) +
 ```
 <br>We had 18 Republicans, 5 Democrats, 1 Independent and 1 Green, out of 25 candidates in 2016 elections.
 Republicans outnumbered the Democrats 3 times and 18 times the Green and Independent parties.<br>
-There are many questions that this party map of candidates brings up. First, why do the Republicans have so many more candidates than the other next big party? Is it saying that the Republicans are more open to bring different perspectives into their lines and the Democrats are more inclusive?<br>
-Another obvious point is that there were mainly two parties competing in these elections, where the small ones seemed to had a very slim chance of winning. This is not just because of the minimal representation by candidates, it is also because the respectively small amounts that were collected by those parties, compare to the two big ones, which will be demostrated later on.<br>
-The American political system has been based on <a href="https://en.wikipedia.org/wiki/Party_system#Types_of_party_systems">two-system-party</a> since its inception, with the Federalists and the Democratic-Republican Parties, until today with the Democratic and Republican parties. An interesting question  for further investigation can be, what are the chances of third party to be counted in the American political system, and can we learn this from the available data?<br><br>
+There are many questions that this party map of candidates brings up. First, why do the Republicans have so many more candidates than the other next big party?<br>
+Another obvious point is that there were mainly two parties competing in these elections, where the small ones seemed to have a very slim chance of winning. This is not just because of the minimal representation by candidates, it is also because the respectively small amounts that were collected by those parties compared to the two big ones, which will be demonstrated later on.<br>
+The American political system has been based on <a href="https://en.wikipedia.org/wiki/Party_system#Types_of_party_systems">two-system-party</a> since its inception, with the Federalists and the Democratic-Republican Parties, until today with the Democratic and Republican parties. An interesting question for further investigation can be, what are the chances of a third party to be counted in the American political system, and can we learn this from the available data?<br><br>
 
 
 #### <strong>Which were the most popular amount contributions?</strong>
@@ -247,16 +263,16 @@ ggsave('amount contributed distribution faceted by all candidates.png')
 
 
 #### <strong>Compare the number of contributions per candidate with a bar plot</strong>
-```{r num_contribtions, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+```{r num_contributions, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 # Calculate the numbers with dplyr
-num_contribtions <- finance %>%
+num_contributions <- finance %>%
   group_by(candidate) %>%
   unique()%>%
   summarise(number = n())%>%
   arrange(desc(number))
 
 # Plot the number of contributions per candidate
-ggplot(data = num_contribtions, aes(x= reorder(candidate, -number),
+ggplot(data = num_contributions, aes(x= reorder(candidate, -number),
                                     y=number,  fill = candidate)) + 
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
@@ -295,12 +311,12 @@ finance_occupation
 ```
 <br>This chart above cannot tells us much since there are about 120,000 occupations that donors added to their contribution forms. The text in the field was open to insert any characters without restriction, thus many occupations were writen many times in different variations<br>
 In order to analyze this facet of the dataset, we will have to write an algorithm that searches for similar terms and combine them together.<br>
-Nevertheless, in the above chart the percent of retired donors is pretty impressive, compare to them being 14.5% of the population in 2016.<br>
-Also interesting to see here is the high percent of donors who filled 'unemployed' at that time. I would think unemployed people won't have the money to donate, but they did, in their ten thousands.<br><br>
+Nevertheless, in the above chart the percent of retired donors is pretty impressive, compared to them being 14.5% of the population in 2016.<br>
+Also interesting to see here is the high percentage of donors who filled 'unemployed' at that time. I would think unemployed people won't have the money to donate, but they did, in their ten thousands.<br><br>
 
 
 #### <strong>Contributions by occupation (above 50,000 contributions)</strong>
-```{r contrib_by_occupatino, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+```{r contrib_by_occupation, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 
 library(grid)
 ggplot(data = finance_occupation, aes(x = reorder(occupation, number), 
@@ -347,7 +363,7 @@ By the Center for American Women and Politics, since 1964, women voted more than
 knitr::include_graphics("women_men_vote.jpg")
 
 ```
-<br>Why did women vote or contributed more than men? Maybe it is related to the <a href="https://www.kff.org/other/state-indicator/distribution-by-gender/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">fact</a> that there were 51% women and 49% men in the US in 2016? That is a very interesting question to study in <a href="http://oxfordre.com/politics/view/10.1093/acrefore/9780190228637.001.0001/acrefore-9780190228637-e-71">further research</a> about women involvemnt in political issues, which, unfortunatelly, is out of the scope of this project..<br><br>
+<br>Why did women vote or contributed more than men? Maybe it is related to the <a href="https://www.kff.org/other/state-indicator/distribution-by-gender/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">fact</a> that there were 51% women and 49% men in the US in 2016? That is a very interesting question to study in <a href="http://oxfordre.com/politics/view/10.1093/acrefore/9780190228637.001.0001/acrefore-9780190228637-e-71">further research</a> about women involvement in political issues, which, unfortunately, is out of the scope of this project.<br><br>
 
 ## Two variable exploration<br><br>
 
@@ -366,7 +382,7 @@ As we can see, only 8 candidate out of the 25 had more than 1% of the sum of all
 
 #### <strong>Top 10 donors who contributed the highest total amounts</strong>
 ```{r finance_contributor, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-# Who doanted the highest amounts?
+# Who donated the highest amounts?
 finance_contributor <- finance
 
 finance_contributor <- finance_contributor %>%
@@ -388,7 +404,7 @@ The actual big contributors, that were masked by the HVF, like Google, Facebook,
 ```{r contributions_limits, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
 knitr::include_graphics("spending limits.jpg")
 ```
-<br>As we can see above, on the <ahrf ="https://transition.fec.gov/info/contriblimitschart1516.pdf">Fec's</a> chart, there were loopholes in the system that allowed transactions of unlimited monies beteen the state and the federal committees.
+<br>As we can see above, on the <ahrf ="https://transition.fec.gov/info/contriblimitschart1516.pdf">Fec's</a> chart, there were loopholes in the system that allowed transactions of unlimited monies between the state and the federal committees.
 
 #### <strong>Number of candidates per contributor (more than 1 candidate)</strong>
 ```{r finance_donor_candidates, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
@@ -481,7 +497,7 @@ finance_big_small_donors$split_200 <- ifelse(finance_big_small_donors$sum > 200,
 ```
 ### <strong>Big and small donors</strong>
 
-I will look now into Hillary Clinton's well-known claim that her campaign <a href ="https://www.politifact.com/nbc/statements/2016/mar/21/hillary-clinton/hillary-clinton-says-her-campaign-depends-small-do/">relied on small donations</a> (less than $100). I went ahead, doubled the number and splitted the data on the $200 mark (as other sources suggested), as the point that separates big and small donors.<br>
+I will look now into Hillary Clinton's well-known claim that her campaign <a href ="https://www.politifact.com/nbc/statements/2016/mar/21/hillary-clinton/hillary-clinton-says-her-campaign-depends-small-do/">relied on small donations</a> (less than $100). I went ahead, doubled the number and cut the data on the $200 mark (as other sources suggested), as the point that separates big and small donors.<br>
 
 #### <strong>How many Hillary's donors were small and how many big, then?</strong>
 ```{r finance_big_small_donors_hill, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
@@ -541,7 +557,7 @@ ggsave('candidates and big-small donors.png')
 
 ```
 <br>It seems that every candidate received more money from 'big donors' than small ones in 2016's elections, except Donald Trump.
-Trump by far passed the rest of the candidates with samll donors contributions. Hillary, on the other hand, was the biggest consumer of big donations, while Sanders, Cruz and Carson receive more balanced ratio of contributinos from small and big donors.<br>
+Trump by far passed the rest of the candidates with small donors contributions. Hillary, on the other hand, was the biggest consumer of big donations, while Sanders, Cruz and Carson receive more balanced ratio of contributinos from small and big donors.<br>
 Working on the above data, I noticed that some people contributed more than once. Let's see who they were.<br><br>
 
 
@@ -554,22 +570,22 @@ finance_repeating_donors %>%
   head()
 
 ```
-Wow! Some people contributed hudreds of times. Truitt Roberta, as the leader on this plot, donated 1,520 times with average of $1, and she gave to the Clinton campaign. There can be many reasons for that. It can be an automaed system that does the online contributions for a person, or an army of trolls who pump-up the number of contributinos for their candidate.
+Wow! Some people contributed hundreds of times. Truitt Roberta, as the leader on this plot, donated 1,520 times with an average of $1, and she gave to the Clinton campaign. There can be many reasons for that. It can be an automated system that does the online contributions for a person or an army of trolls who pump-up the number of contributions for their candidate.
 An interesting question here for me is who was the candidate that had the highest number of repeating contributors?
 I will consider here that extreme-repeating contributors as ones who donated more than 100 times.<br><br>
 
 
 #### <strong>Candidates and repeating contributors</strong>
 ```{r finance_repeating_donors_cand, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-extreme_contibutors <- finance_repeating_donors
-extreme_contibutors <- extreme_contibutors %>%
+extreme_contributors <- finance_repeating_donors
+extreme_contributors <- extreme_contributors %>%
   group_by(candidate) %>%
   filter(count > 100) %>%
   summarise(sum_count = sum(count), average = mean(count)) %>%
   arrange(desc(sum_count))
-extreme_contibutors
+extreme_contributors
 
-ggplot(data = extreme_contibutors, aes(x= reorder(candidate, -sum_count), y = sum_count, fill = candidate)) +
+ggplot(data = extreme_contributors, aes(x= reorder(candidate, -sum_count), y = sum_count, fill = candidate)) +
   geom_bar(position = 'dodge', stat = "identity") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   geom_text(aes(label = round(average, 1)), vjust=-0.25) +
@@ -608,33 +624,10 @@ ggplot(data=finance_date, aes(x=date, y=total)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 
 ```
-<br>Red and blue lines, respectivly, are the Republican and Democratic primaries and the green line is the general election.<br>
+<br>Red and blue lines, respectively, are the Republican and Democratic primaries and the green line is the general election.<br>
 
 People started to donate already in 2014, but in very small numbers, as can be seen further down. Most of the donors started contributing in early 2015 and until November 2016. Some kept on giving even after the elections, but it died after January 2017. We can see a steady built-up of the amount donated leading to the highest amounts given in the months and days before the general election. 
-There was a pick of contributions between February and June of 2016 and a drop right after. This might be the related to the Republican and Democratic primaries that took place between January 1st 2016 and Jan 15th 2016. <br><br>
-
-Here is an interactive map that I used to look for interesting patterns, followed by some insights.
-```{r finance_dynamic, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-finance_dynamic <-  finance
-finance_dynamic <- finance_dynamic %>%
-  group_by(date) %>%
-  summarise(Contributions = n(), total = sum(amount))
-finance_dynamic$date <- as.Date(finance_dynamic$date, "%Y-%m-%d")
-finance_dynamic <- as.data.table(finance_dynamic)
-finance_dynamic <- as.xts.data.table(finance_dynamic)
-# class(finance_dynamic)
-# head(finance_dynamic)
-dygraph(finance_dynamic, "Total contributions per day (Dynamic chart)", ylab = "Total") %>%
-  dyOptions(fillGraph = TRUE, fillAlpha = 0.6, animatedZooms = TRUE, 
-            labelsKMB = TRUE, drawPoints = TRUE, pointSize = 1.8) %>%
-  dyRangeSelector(height = 20)
-```
-Zoom in by selecting a range of dates with your mouse. To zoom out double click on the graph.<br><br>
-
-Americans do not (or do very little) donate on Saturdays and Sundays, as can be seen when zooming to a week level on the above graph. This pattern is consistant throughout the elections cycle.<br>
-Zooming in on the fartherst left side of the graph, we can see that there were contributions given as early as late 2013 (and not 2014 as assumed above). It seems that the bigger numbers of donations started kicking-in somewhere in mid-lat March 2015. Interestingly, less than a month later was the day that Hillary Clinton announced her run officially. Also, it seems that after Trump's announcement, on June 16th 2016, there was an increase in donations as well.<br>
-Another very interesting pattern is revealed when zooming in to a month level. The sum of donations for the last day(s) of each month had a sharp increase in donations, compare to the rest of the month and can be seen as the spikes along the x axis.<br>
-Let's take a look at the early donations and who received them.<br><br>
+There was a pick of contributions between February and June of 2016 and a drop right after. This might be related to the Republican and Democratic primaries that took place between January 1st, 2016 and Jan 15th, 2016. <br><br>
 
 
 ### <strong>Party/Gender</strong>
@@ -675,7 +668,7 @@ ggsave('number of contributions by gender green indep.png')
 ```
 
 
-<br> Women contributed 1.2 times more than men for the Democratic party. At the other side of the asile, the Republican men contributed 1.8 times more than women. The Green party had even wider gap between men and women's number of contributions. Men contributed twice as much as women to that party. The Independent party was the only one to have almost identical number of contributions from men and women.
+<br> Women contributed 1.2 times more than men for the Democratic party. At the other side of the aisle, the Republican men contributed 1.8 times more than women. The Green party had even wider gap between men and women's number of contributions. Men contributed twice as much as women to that party. The Independent party was the only one to have almost identical number of contributions from men and women.
 We can also see here that Democrats received the highest number of contributions. Did they also received the highest amount of contributions?<br><br>
 
 
@@ -687,7 +680,7 @@ sum_contrib_party <- finance %>%
   dplyr::arrange(desc(sum_contrib))
 sum_contrib_party
 ```
-<br>Democrats received $582M, almost twice as much as the Repubicans.
+<br>Democrats received $582M, almost twice as much as the Republicans.
 The green party received $1M, which is more than 3 times contributors than the Independent party.<br><br>
 
 
@@ -704,7 +697,7 @@ ggplot(data=H_female_contrib, aes(x=gender, y=contr_num, fill = gender)) + geom_
     scale_fill_manual(values=c("#5090dc", "#db3434"))+
   scale_y_continuous(labels = comma) + facet_wrap(~candidate) +
   ylab("Number of contributions")
-ggsave('clinton and trump contributions by genders.png')
+ggsave('Clinton and Trump contributions by genders.png')
 ```
 <br>Women donated to Clinton 1.5 times more than men, and man donated to Trump 1.7 time more than women.
 It seems that the gender's role with contributions to those two candidates was pretty dominant.<br><br>
@@ -1010,9 +1003,9 @@ Leading the state contributions are California with $160M, New York with $130M, 
 #         cardinality_threshold = NULL)
 # finance_relation_pairs
 # 
-# # saveWidget(finance_relation_pairs, "correlations btn population n contributions.html")
-# ggsave('correlations btn population n contributions1.png')
-# <img src="correlations btn population n contributions1.png" />
+# # saveWidget(finance_relation_pairs, "correlations between population amd contributions.html")
+# ggsave('correlations between population n contributions1.png')
+# <img src="correlations between population n contributions1.png" />
 knitr::include_graphics("correlations btn population n contributions1.png")
 ```
 <br>We can see that there is a very strong correlation (0.935) between the number of contributions per state and the number of citizens in this state. In a further investigation I would analyze the correlation between cities and their financial contributions to the different parties.<br><br>
@@ -1020,13 +1013,13 @@ knitr::include_graphics("correlations btn population n contributions1.png")
 
 ### Reflection
 
-Exploring 2016 elections' finances dataset and describing my findings in numbers, plots and maps was a great challange! This was a great opportunity to practice plotting with the built-in R and useful external packages, like plyr, dplyr,  ggplot2, data.table and others. <br>
-The work on this dataset also taught me a lot of things I was not aware of, despite them being publically available and me being an avid follower of politics. 
+Exploring 2016 elections' finances dataset and describing my findings in numbers, plots and maps was a great challenge! This was a great opportunity to practice plotting with the build-in R and useful external packages, like plyr, dplyr,  ggplot2, data.table and others. <br>
+The work on this dataset also taught me a lot of things I was not aware of, despite them being publicaly available and me being an avid follower of politics. 
 
 
 #### Findings
 
-Data can be missleading if it is not connected to the real life events that produced the topic being investigated. For example, the clinton campaign had many contributions from many contributors coming in, represented by only one name (Hillary Victory Foundation). The 'contributor' HVF was an outlier that skewed the data by masking all those contributors. Nevertheless, to remove this 'contributor' from the dataset meant to remove also the sums of the donations that this line in the dataset encompases, which in this case was $43M, not a negligible amount, so I left it as it is and hacked my way around it. <br>
+Data can be misleading if it is not connected to the real-life events that produced the topic being investigated. For example, the Clinton campaign had many contributions from many contributors coming in, represented by only one name (Hillary Victory Foundation). The 'contributor' HVF was an outlier that skewed the data by masking all those contributors. Nevertheless, to remove this 'contributor' from the dataset meant to remove also the sums of the donations that this line in the dataset encompasses, which in this case was $43M, not a negligible amount, so I left it as it is and hacked my way around it. <br>
 
 ##### Trivial findings
 
@@ -1036,33 +1029,35 @@ Data can be missleading if it is not connected to the real life events that prod
 * $25 was the most frequent contribution.
 * Hillary Clinton relied on 'big donations' than small donations.
 * Men and women contributed more or less the same in those elections in general. 
-* There were hardly any contributions during the weekends compare to the week days and at the end of each month there was a spike with contributions.
+* There were hardly any contributions during the weekends compared to the weekdays and at the end of each month, there was a spike with contributions.
 * Contributions started to come in as early as 2013.
-* After Trump and Hillry's announcements more contributions came in.
+* After Trump and Hillary's announcements more contributions came in.
 * Most of the general election's contributions were given during the 4 months before election day, starting after the primaries ended and the final 2 candidates were chosen.
+* There was a very strong correlation between number of contributions from a state and the number of people living in this state.
 
 ##### Surprising findings
 
-* Bernie Sanders had more contributions for the primaries than the presidential winner had throghout the entire election season. 
-* Hillary Clinton who received 48% of the constributions and 51% of the sum of all the contributions, while her opponent received only 10% of the contributions and 13% of the sum of all the contributions.
-* Hillary Clinton's campaign alegedly received $84M <a href ="illegal campaign contributions">illegal campaign contributions</a> from rich donors, who would not have been able to donate as much as $360K, if not this special 'arrangement' by the HVF and the DNC.
-* 35K people donate to 2 or more than candidate. 
-* Donald Trump had 3.5 times more small donations than big ones, and was the only candidate who received more small donations than big ones. 
+* Bernie Sanders had more contributions for the primaries than the presidential winner had throughout the entire election season. 
+* Hillary Clinton who received 48% of the contributions and 51% of the sum of all the contributions, while her opponent received only 10% of the contributions and 13% of the sum of all the contributions.
+* Hillary Clinton's campaign allegedly received $84M <a href ="illegal campaign contributions">illegal campaign contributions</a> from rich donors, who would not have been able to donate as much as $360K, if not this special 'arrangement' by the HVF and the DNC.
+* 35K people donate to 2 or more than one candidate. 
+* Donald Trump had 3.5 times more small donations than big ones and was the only candidate who received more small donations than big ones. 
 Bernie Sanders received more or less the same number of big and small contributions. I was surprised by this statistic since I was always sure that he lead the small donations' realm with his grassroots movement.
-* Some people gave hundreds of times amounts and 3 even gave more than thousand times. Hillary Clinton lead this list with 201K repeating contributions, where Bernie Sanders followed by 78K.
+* Some people gave hundreds of times amounts and 3 even gave more than a thousand times. Hillary Clinton lead this list with 201K repeating contributions, where Bernie Sanders followed by 78K.
 * Retired and unemployed people contributed more than everyone. Note that this facet of the analysis is not complete since the data in this column is far from being clean.
 * Contributions were given after the elections for a short while.
-*
+* Gender played a major role with contributions to 3 out of the 4 parties, especially in the Republican and Green parties, where there are much more men contributions than women.
+As far as the two final candidates, Hillary Clinton had 1.5 times more contributions from women and Donald Trump had 1.7 times more contributions from men.
 
-#### Challanges
+#### challenges
 
-I started the project with a dataset of California financial contributions, the state I live in, but found it lacking data that is available on the national level, knowing that I could always go back and drill down into the state's data. It seemed like more of a challange to work with the national dataset and it indeed was exactly that.
+I started the project with a dataset of California financial contributions, the state I live in, but found it lacking data that is available on the national level, knowing that I could always go back and drill down into the state's data. It seemed like more of a challenge to work with the national dataset and it indeed was exactly that.
 
-Choosing to work with more than 7 million rows on a laptop was at the beginning very time consuming, but I found better ways and tools to work with for a given task to overcome the resource obstacle. For example, I experiencd issues with dplyr and knittr, so I moved to work with sqldf, which worked. Still slow, but worked. I worked with built-in r functions, as with the "Percent of contributions per gender" block above, but I ended up doing most of the code with dplyr, for its straight-forward orientation. In order to improve the workflow, I also created a sample file, which I used to run time-consuming code chunks.<br>
+Choosing to work with more than 7 million rows on a laptop was at the beginning very time consuming, but I found better ways and tools to work with for a given task to overcome the resource obstacle. For example, I experienced issues with dplyr and knittr, so I moved to work with sqldf, which worked. Still slow, but worked. I worked with built-in r functions, as with the "Percent of contributions per gender" block above, but I ended up doing most of the code with dplyr, for its straight-forward orientation. In order to improve the workflow, I also created a sample file, which I used to run time-consuming code chunks.<br>
 
 Removing and adding new variables. I found through this project that, on one hand, you want to minimize the length of columns for the sake of speed, and on the other hand, you find that those same variables can be meaningful further down the analysis. I had to go back and recreate the program, adding the old variables back to the dataset.<br>
 
-Another challange was to choose which libraries to work with on the maps. In order to be able to map the distributions of variables on a map, I had to learn some new packages, like leaflet, tmap and ggmap.<br>
+Another challenge was to choose which libraries to work with on the maps. In order to be able to map the distributions of variables on a map, I had to learn some new packages, like leaflet, tmap and ggmap.<br>
 
 #### Future exploration
 
