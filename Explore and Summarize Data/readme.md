@@ -1,6 +1,8 @@
 Version: 1.0<br>
 <h1> Exploratory Data Analysis</h1>
 
+<img src="2016 elections finance1.jpg" />
+
 <br>The full analysis of this project can be read as on my <a href ="https://u4see.org/data/2016-elections/all.html">website.</a> A Github repository with all the files and folders is available <a href="https://github.com/AviadGiat/data-analysis/tree/master/Explore%20and%20Summarize%20Data">here.</a><br>
 
 The main dataset used in this project was downloaded from the <a href ="https://classic.fec.gov/disclosurep/PDownload.do">EFC website</a> and is called '2016 Presidential Campaign Finance' (ALL.zip).<br>
