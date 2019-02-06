@@ -1,0 +1,2190 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Titanic}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \#
+
+The Titanic
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}439}]:} \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{Image}
+          \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{core}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{HTML}
+          \PY{n}{Image}\PY{p}{(}\PY{n}{url}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{titanic.jpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}439}]:} <IPython.core.display.Image object>
+\end{Verbatim}
+            
+    \#
+
+Describing, questioning and analyzing a disaster
+
+ \#\#
+
+Udacity - Data Analyst Nanodegree Program
+
+\#\#
+
+Aviad Giat - June 2017
+
+     In this document: (Titles are clickable) 1. Section \ref{discovering}
+2. Section \ref{analyzing} 3. Section \ref{class} 4.
+Section \ref{gender} 5. Section \ref{age} 6. Section \ref{fare} 7.
+Section \ref{conclusion} 8. Section \ref{sources} 9.
+Section \ref{dataframes}
+
+     \#
+
+Import Libraries, upload and wrangler the data
+
+ Section \ref{top}
+
+    \subsubsection{Libraries to import and use in this
+analysis}\label{libraries-to-import-and-use-in-this-analysis}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}492}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib} \PY{k}{as} \PY{n+nn}{mpl}
+          \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{style}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+          \PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{plotly} \PY{k}{as} \PY{n+nn}{py}
+          \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+          \PY{k+kn}{import} \PY{n+nn}{random}
+          \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{stats}
+          \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{chi2\PYZus{}contingency}
+\end{Verbatim}
+
+
+    \subsubsection{Plot the matplotlib graphics
+inline}\label{plot-the-matplotlib-graphics-inline}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}493}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline 
+\end{Verbatim}
+
+
+    \subsubsection{Making the wrapper output look nicer when output is too
+long}\label{making-the-wrapper-output-look-nicer-when-output-is-too-long}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}494}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{html}
+          \PYZlt{}style\PYZgt{}.output\PYZus{}wrapper, .output \PYZob{}height:auto !important; max\PYZhy{}height:1000px;
+                                          \PYZcb{}.output\PYZus{}scroll \PYZob{}box\PYZhy{}shadow:none !important; webkit\PYZhy{}box\PYZhy{}shadow:none !important;\PYZcb{}\PYZlt{}/style\PYZgt{}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+<IPython.core.display.HTML object>
+    \end{verbatim}
+
+    
+    \subsubsection{Upload, clean, style, organize the raw data and output
+the first few lines of the modified Pandas
+dataframe}\label{upload-clean-style-organize-the-raw-data-and-output-the-first-few-lines-of-the-modified-pandas-dataframe}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}495}]:} \PY{c+c1}{\PYZsh{} Open the Titanic dataset with Pandas}
+          \PY{n}{statsi} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{titanic\PYZhy{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Change columns\PYZsq{} names}
+          \PY{n}{statsi}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{n}{columns}\PY{o}{=}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pclass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}   
+          
+          \PY{c+c1}{\PYZsh{} Change the \PYZdq{}Fare\PYZdq{} variable to an integer}
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}   
+          
+          \PY{c+c1}{\PYZsh{} Fill the empty \PYZsq{}Age\PYZsq{} column\PYZsq{}s cells with even spaced linear numbers}
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{interpolate}\PY{p}{(}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Create a new columns \PYZsq{}Sex\PYZsq{} as an int}
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{\PYZcb{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Narrow down the (variables) scope of this dataframe}
+          \PY{n}{statsi} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{} Keep floating numbers with not more than 2 decimals}
+          \PY{n}{pd}\PY{o}{.}\PY{n}{set\PYZus{}option}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{display.precision}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)} 
+          
+          \PY{c+c1}{\PYZsh{} Make sure there are no NULLS. Change False to True to see the result.}
+          \PY{k}{if} \PY{k+kc}{False}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Make sure there are no empty sells in the dataframe}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===================================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+              
+          
+          \PY{c+c1}{\PYZsh{} Add column with strings (Yes, No) drawing the data from the integeer Survived column }
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{} Create a new column \PYZsq{}Survived\PYZus{}y\PYZus{}n\PYZsq{}}
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+m+mi}{0}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{:}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Yes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} map the new column}
+\end{Verbatim}
+
+
+    \subsubsection{Print the new dataframe
+(statsi)}\label{print-the-new-dataframe-statsi}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}496}]:} \PY{c+c1}{\PYZsh{} Print the first 5 lines of the new dataframe with Duplicated columns, }
+          \PY{c+c1}{\PYZsh{} where 1 column represents the integer and one the string, for easier calculations.}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The new dataframe}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s first rows}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{==============================}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The new dataframe's first rows
+==============================
+   Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n
+0         0      3    male  22.0     7    0           No
+1         1      1  female  38.0    71    1          Yes
+2         1      3  female  26.0     7    1          Yes
+3         1      1  female  35.0    53    1          Yes
+4         0      3    male  35.0     8    0           No
+
+    \end{Verbatim}
+
+    \subsubsection{Defining age ranges for the "Age" analysis further down
+in this
+document}\label{defining-age-ranges-for-the-age-analysis-further-down-in-this-document}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}497}]:} \PY{k}{def} \PY{n+nf}{age\PYZus{}range}\PY{p}{(}\PY{n}{age}\PY{p}{)}\PY{p}{:}
+              \PY{k}{if} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{10}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{01}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{10} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{20}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{20} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{30}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{30} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{40}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{30}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{40} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{50}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{40}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{50} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{60}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{50}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{60} \PY{o+ow}{and} \PY{n}{age} \PY{o}{\PYZlt{}} \PY{l+m+mi}{70}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{60}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{elif} \PY{n}{age} \PY{o}{\PYZgt{}} \PY{l+m+mi}{70}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{70}\PY{l+s+s1}{\PYZsq{}}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{k}{return}
+              \PY{k}{return}
+          
+          \PY{c+c1}{\PYZsh{} Add a column to the dataframe with Ages according to the above function}
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{age\PYZus{}range}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Description of the variables in this
+analysis}\label{description-of-the-variables-in-this-analysis}
+
+    Survived ~ ~ ~ ~ ~ Passenger's survival as an integer (0 = No, 1 = Yes)
+Survived\_y\_n ~ Passenger's survival as a string (yes, No) Class ~ ~ ~
+~ ~ ~ ~ ~Passenger's Class (1 = 1st; 2 = 2nd; 3 = 3rd) Gender ~ ~ ~ ~ ~
+~ Passenger's gender (Male/Female) Sex ~ ~ ~ ~ ~ ~ ~ ~ ~ Passenger's
+gender (0 = Male; 1 = Female) Age ~ ~ ~ ~ ~ ~ ~ ~ ~ Passenger's Age Ages
+~ ~ ~ ~ ~ ~ ~ ~ Passenger's Age group by decades (0-10 = 01, 10-20 = 10,
+... , 70-80 = 70) Fare ~ ~ ~ ~ ~ ~ ~ ~ ~The cost of the ticket in
+dollars
+
+    \subsubsection{Add a new dataframe with only
+survivors}\label{add-a-new-dataframe-with-only-survivors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}498}]:} \PY{c+c1}{\PYZsh{} Add a new dataframe with only survivors, where Survived = 1 (Yes).}
+          \PY{c+c1}{\PYZsh{} This dataframe will be used throughout this document}
+          \PY{n}{survivors} \PY{o}{=} \PY{n}{statsi}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{n}{deep}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          \PY{n}{survivors} \PY{o}{=} \PY{n}{survivors}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    Section \ref{top} Section \ref{setup}
+
+     \#
+
+Discovering and describing the data
+
+ Section \ref{top}
+
+    \subsubsection{Dataframe summary, types, NaNs and
+statistics}\label{dataframe-summary-types-nans-and-statistics}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}499}]:} \PY{c+c1}{\PYZsh{} Number of columns and rows (max)}
+          \PY{n}{columns} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+          \PY{n}{rows} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Rows and columns}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{There are }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{columns} \PY{o}{+} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ Columns and }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{rows} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ Rows in this dataset}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  
+          
+          \PY{c+c1}{\PYZsh{} List of column names, number of records and the type of data for each record}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{The types of data for this dataframe}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{====================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{dtypes}\PY{p}{)} 
+          
+          \PY{c+c1}{\PYZsh{} How many total entries? What are the columns and their types}
+          \PY{c+c1}{\PYZsh{} Each column has how many not\PYZhy{}null values?}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{More details about the data frame}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}\PY{p}{)} 
+          
+          \PY{c+c1}{\PYZsh{} Statistical summary of the numeric variables}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Statistical summary of the numeric data}\PY{l+s+s1}{\PYZsq{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=======================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{statsi1} \PY{o}{=} \PY{n}{statsi}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} Drop columns for relevancy}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi1}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Rows and columns
+================
+There are 8 Columns and 891 Rows in this dataset
+
+
+The types of data for this dataframe
+====================================
+Survived          int64
+Class             int64
+Gender           object
+Age             float64
+Fare              int32
+Sex               int64
+Survived\_y\_n     object
+Ages             object
+dtype: object
+
+
+More details about the data frame
+=================================
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 8 columns):
+Survived        891 non-null int64
+Class           891 non-null int64
+Gender          891 non-null object
+Age             891 non-null float64
+Fare            891 non-null int32
+Sex             891 non-null int64
+Survived\_y\_n    891 non-null object
+Ages            814 non-null object
+dtypes: float64(1), int32(1), int64(3), object(3)
+memory usage: 52.3+ KB
+None
+
+
+Statistical summary of the numeric data
+=======================================
+       Survived   Class     Age    Fare
+count    891.00  891.00  891.00  891.00
+mean       0.38    2.31   29.73   31.79
+std        0.49    0.84   13.90   49.70
+min        0.00    1.00    0.42    0.00
+25\%        0.00    2.00   21.00    7.00
+50\%        0.00    3.00   28.50   14.00
+75\%        1.00    3.00   38.00   31.00
+max        1.00    3.00   80.00  512.00
+
+    \end{Verbatim}
+
+    \#
+
+Questions about the data
+
+    \begin{itemize}
+\tightlist
+\item
+  Were there more people who died or survived? What was the percent of
+  survivors from all passengers?
+\item
+  Who had the best chances to survive? ~ ~{Males VS Females (Gender)} ~
+  ~{Age by decades (Ages)} ~ ~{Ticket's cost (Fare)} ~ ~{Class - The
+  ticket class (First, Second, Third)}
+\end{itemize}
+
+    Section \ref{top} Section \ref{discovering}
+
+     \#
+
+Analyzing the data and answering the above questions (among others)
+
+ Section \ref{top}
+
+    \begin{itemize}
+\tightlist
+\item
+  Note that this project does not take into account the crew members on
+  board and their survival statistics. The scope of this analysis is
+  limited to the passengers only. The dependent variable is the number
+  of survivors. I will analyze 4 independent variables against it. The
+  variables are:~ {Class }\textbar{} {Age }\textbar{} {Gender
+  }\textbar{} {Fare}. I will also try to answer one of the above
+  questions with a statistical test. Let's start with the general number
+  of survivors and victims:
+\end{itemize}
+
+    \subsection{Number of survivors}\label{number-of-survivors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}500}]:} \PY{c+c1}{\PYZsh{} Number of survivors}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of survivors and victims}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===============================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Plot number of survivors}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ticks}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plot} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{factorplot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{statsi}\PY{p}{,} \PY{n}{kind}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} 
+                                \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Blues}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{legend}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{aspect}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of passengers who survived and who did not}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of survivors and victims
+===============================
+
+No     549
+Yes    342
+Name: Survived\_y\_n, dtype: int64
+
+
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}500}]:} <matplotlib.text.Text at 0x136ef70b160>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Percent of survivors}\label{percent-of-survivors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}501}]:} \PY{c+c1}{\PYZsh{} Set up the plot\PYZsq{}s figure}
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Plot the percent of survivors}
+          \PY{n}{pie\PYZus{}chart} \PY{o}{=} \PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Create the array \PYZsq{}x\PYZsq{} for the pie chart}
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}55a868}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}2adbf7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{} Set the colors for the slices (2 in this case)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{pie\PYZus{}chart}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Died}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                  \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{c+c1}{\PYZsh{} Plot the pie chart}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} make the chart look good (round)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of Survivors}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} Give a title to the plot}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Show the plot}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  As we can see from the above pie chart, more passengers died (61\%) on
+  the Titanic than survived (38\%). For every 10 people who survived 16
+  perished.
+\end{itemize}
+
+    Section \ref{top} Section \ref{analyzing}
+
+    Now, lets break down the numbers and percentages following the 4
+variables Class \textbar{} Age \textbar{} Gender \textbar{} Fare:
+
+     \#
+
+Survivors by Class
+
+Section \ref{top}
+
+    \begin{itemize}
+\tightlist
+\item
+  Which class members' survival rate was the highest?
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}502}]:} \PY{c+c1}{\PYZsh{} Print related numbers to the Class variable}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of passengers in each class}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==================================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{pass\PYZus{}count} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{sort}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)} \PY{c+c1}{\PYZsh{} Count passengers}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pass\PYZus{}count}\PY{p}{)} \PY{c+c1}{\PYZsh{}Print the count of the passengers}
+          
+          \PY{c+c1}{\PYZsh{} Print the number of survivors as a crosstab}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of survivors by class}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{============================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} Output a pivot\PYZhy{}like table crossing data from 2 variables}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Class}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{)}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Print crosstab of the percent of survivors by class}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of survivors by class}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=============================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} Crossing data with percent of survivors by class}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Class}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of passengers in each class
+==================================
+
+1    216
+2    184
+3    491
+Name: Class, dtype: int64
+
+
+Number of survivors by class
+============================
+
+Survived\_y\_n   No  Yes
+Class                 
+1              80  136
+2              97   87
+3             372  119
+
+
+Percent of survivors by class
+=============================
+
+Survived\_y\_n     No    Yes
+Class                     
+1             37.04  62.96
+2             52.72  47.28
+3             75.76  24.24
+All           61.62  38.38
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}503}]:} \PY{c+c1}{\PYZsh{} Plots of passengers by class}
+          
+          \PY{n}{plot} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{factorplot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data} \PY{o}{=} \PY{n}{statsi}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{aspect}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{kind}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Blues}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{legend}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Passengers By Class (in numbers)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{plot} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{factorplot}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data} \PY{o}{=} \PY{n}{statsi}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{aspect}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{ci}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{kind}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{winter\PYZus{}d}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survivors by Class (in percent)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}503}]:} <matplotlib.text.Text at 0x136ec343ac8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    First class passengers had the highest survival rate (62\%), while
+passengers from class 3 had less than 25\% chances to survive.
+Passengers from class 2 had almost 50\% chances to survive. Was it a
+chance, and could the survival odds flip between the classes in a
+similar disaster like that?
+
+H0 = The survival rate will be equal (33.3\% to the passengers in each
+group)
+
+Since this is a nominal type of data I will use the Chi-Square test to
+analyze it:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}504}]:} \PY{c+c1}{\PYZsh{} Chi\PYZhy{}Square test to test the goodness of fit between the survival rate of the 3 classes}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Chi\PYZhy{}Square Test \PYZhy{} Number of survivors by Class}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==============================================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ho: There is no significant difference between any of the classes}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{ survival rate.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ha: There is a significant difference in the survival rate between any of the 3 classes of passengers.}\PY{l+s+s1}{\PYZsq{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{The survival rate should be 33.3}\PY{l+s+si}{\PYZpc{} f}\PY{l+s+s1}{or the 1st Class, 33.3}\PY{l+s+si}{\PYZpc{} f}\PY{l+s+s1}{or the Second Class and 33.3}\PY{l+s+si}{\PYZpc{} f}\PY{l+s+s1}{or the Third Class.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Contingency table of the classes\PYZsq{} survival}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Contingency table of the classes}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{ surviuval}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===========================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Class}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{chi\PYZus{}sq} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Class}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The Chi\PYZhy{}Square (Goodness of fit), Probablility, Degrees Of Freedom, and the Expected frequencies}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{==============================================================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{chi2\PYZus{}contingency}\PY{p}{(}\PY{n}{chi\PYZus{}sq}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Chi-Square Test - Number of survivors by Class
+==============================================
+
+Ho: There is no significant difference between any of the classes' survival rate.
+Ha: There is a significant difference in the survival rate between any of the 3 classes of passengers.
+The survival rate should be 33.3\% for the 1st Class, 33.3\% for the Second Class and 33.3\% for the Third Class.
+
+Contingency table of the classes' surviuval
+===========================================
+Survived    0    1  All
+Class                  
+1          80  136  216
+2          97   87  184
+3         372  119  491
+All       549  342  891
+
+
+The Chi-Square (Goodness of fit), Probablility, Degrees Of Freedom, and the Expected frequencies
+==============================================================================
+(102.88898875696056, 4.5492517112987927e-23, 2, array([[ 133.09090909,   82.90909091],
+       [ 113.37373737,   70.62626263],
+       [ 302.53535354,  188.46464646]]))
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  We can see here that the chi-square statistic is 103 with 2 degrees of
+  freedom. The p-value is smaller than 0.00001. The result is
+  significant at p \textless{} 0.5.
+\item
+  If we were to repeat the disaster the survival rates of the 3 classes
+  will repeat themselves 95 percent of the times.
+\end{itemize}
+
+    Section \ref{top} Section \ref{class}
+
+     \#
+
+Survivors by Gender
+
+Section \ref{top}
+
+    \begin{itemize}
+\tightlist
+\item
+  Which gender had better survival rates? Let's start with counting the
+  number of passengers on board after leaving the last port of
+  embarkation. After that we'll find what is the percent of the
+  survivors and the number of survivors from each gender:
+\end{itemize}
+
+    \subsubsection{Number of Passengers}\label{number-of-passengers}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}505}]:} \PY{c+c1}{\PYZsh{} Number of passengers}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of males and Females on board}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{================================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Gender}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{There were 263 more males than females on board}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} Pie chart of the survivors and victims in percent}
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{pie\PYZus{}chart} \PY{o}{=} \PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}d4ebf7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}eae8ea}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{pie\PYZus{}chart}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{males}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{females}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                  \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgrey}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of males and females on board}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of males and Females on board
+================================
+
+male      577
+female    314
+Name: Gender, dtype: int64
+
+
+There were 263 more males than females on board
+
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_48_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Number and percent of males and females from the
+survivors}\label{number-and-percent-of-males-and-females-from-the-survivors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}506}]:} \PY{c+c1}{\PYZsh{} Pie chart of percent of males and females on board}
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{sbg} \PY{o}{=} \PY{n}{statsi} \PY{c+c1}{\PYZsh{} Create new DF for survivors by gender}
+          \PY{n}{pie\PYZus{}chart} \PY{o}{=} \PY{p}{(}\PY{n}{sbg}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}9ecae1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}94b582}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{pie\PYZus{}chart}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{females}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{males}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                  \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of males and females from all survivors (342)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===========}\PY{l+s+s1}{\PYZsq{}}
+                    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Number of survivors by Gender}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of survivors by Gender}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=============================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Gender}\PY{p}{,} \PY{n}{survivors}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_50_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of survivors by Gender
+=============================
+
+Survived  1.0  All
+Gender            
+female    233  233
+male      109  109
+All       342  342
+
+
+
+    \end{Verbatim}
+
+    We can see that more females than males survived. But is it significant
+difference or a statistical error? Before answering this question with a
+statistical test, lets take a look at the numbers and percentages of
+survival of both genders and within each gender:
+
+    \section{Male survival}\label{male-survival}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}507}]:} \PY{c+c1}{\PYZsh{} Pie chart of percent of males survived}
+          \PY{n}{sbgm} \PY{o}{=} \PY{n}{sbg}
+          \PY{n}{sbgm} \PY{o}{=} \PY{n}{sbgm}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{sbgm}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{male}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{sbgm\PYZus{}chart} \PY{o}{=} \PY{n}{sbgm}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}fce394}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f8b735}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{sbgm\PYZus{}chart}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                  \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{males Died}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{males Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{males survivors (109) from all males who embarked (577)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=========================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Percent of Male survivors}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of Male survivors}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{========================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{sbgm}\PY{o}{.}\PY{n}{Gender}\PY{p}{,} \PY{n}{sbgm}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_53_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of Male survivors
+========================
+
+Survived\_y\_n   No  Yes  All
+Gender                     
+male          468  109  577
+All           468  109  577
+
+
+
+    \end{Verbatim}
+
+    \section{Female survival}\label{female-survival}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}508}]:} \PY{c+c1}{\PYZsh{} Pie chart of percent of females survived}
+          \PY{n}{sbgf} \PY{o}{=} \PY{n}{sbg}
+          \PY{n}{sbgf} \PY{o}{=} \PY{n}{sbgf}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{sbgf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{female}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{sbgf\PYZus{}chart} \PY{o}{=} \PY{n}{sbgf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}6baed6}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}deebf7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{sbgf\PYZus{}chart}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                  \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Female Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{females Died}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Female survivors (233) from all females who embarked (314)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==============================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Percent of Male survivors}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of Female survivors}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{========================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{sbgf}\PY{o}{.}\PY{n}{Gender}\PY{p}{,} \PY{n}{sbgf}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_55_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of Female survivors
+========================
+
+Survived\_y\_n  No  Yes  All
+Gender                    
+female        81  233  314
+All           81  233  314
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  75\% of the females who embarked on the first and last trip of the
+  Titanic survived, compare to only 19\% of the males.~ This means that
+  females had 4 times better chance to survive on this cruise. When the
+  Titanic left the last harbor, there were 577 males on the ship (out of
+  891 passengers), almost twice the number of females (314). Yet, 68\%
+  of the total survivors were females (233). Now, lets check with a
+  statistical test if the difference between the two genders' survival
+  rate is significantly different and is not due to chance. I will us
+  the chi-Square test here as well:
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}509}]:} \PY{c+c1}{\PYZsh{} Chi\PYZhy{}Square test to test the goodness of fit between males and females who survived}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Chi\PYZhy{}Square Test \PYZhy{} Number of survivors by Gender}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=============================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ho: There is no significant difference between males and females}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{s survival rate.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ha: There is a significant difference between males and females}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{s survival rate}\PY{l+s+s1}{\PYZsq{}}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{The survival rate should be 50}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{ males and 50}\PY{l+s+si}{\PYZpc{} f}\PY{l+s+s1}{emales.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Contingency table of males and females survival}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Contingency table of males and females survival}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===========================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Gender}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{chi\PYZus{}s} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Gender}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The Chi\PYZhy{}Square (Goodness of fit), Probablility, Degrees Of Freedom, and the Expected frequencies}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{==============================================================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{chi2\PYZus{}contingency}\PY{p}{(}\PY{n}{chi\PYZus{}s}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Chi-Square Test - Number of survivors by Gender
+=============================
+
+Ho: There is no significant difference between males and females's survival rate.
+Ha: There is a significant difference between males and females's survival rate
+The survival rate should be 50\% males and 50\% females.
+
+Contingency table of males and females survival
+===========================================
+Survived    0    1  All
+Gender                 
+female     81  233  314
+male      468  109  577
+All       549  342  891
+
+
+The Chi-Square (Goodness of fit), Probablility, Degrees Of Freedom, and the Expected frequencies
+==============================================================================
+(260.71702016732104, 1.1973570627755645e-58, 1, array([[ 193.47474747,  120.52525253],
+       [ 355.52525253,  221.47474747]]))
+
+    \end{Verbatim}
+
+    The Chi square result is 260 with 1 degree of freedom. The one-tailed P
+value is less than 0.0001. The association between males, females, and
+survival is considered to be extremely statistically significant. In
+other words, females did not survive in such a great proportion by
+chance. There had to be a cultural code of behavior that says, females
+first.
+
+    Section \ref{top} Section \ref{gender}
+
+     \#
+
+Survivors by Age
+
+Section \ref{top}
+
+    \begin{itemize}
+\tightlist
+\item
+  Which group age had the best chances of survival?
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}510}]:} \PY{c+c1}{\PYZsh{} Plot histograms of the distribution of passengers compare to the distribution of survivors}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{40}\PY{p}{,} \PY{n+nb}{range} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{)}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{All Passengers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{skyblue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{40}\PY{p}{,} \PY{n+nb}{range} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{)}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Only Survivors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Age}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Age distribution in years}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_62_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}511}]:} \PY{c+c1}{\PYZsh{} Plot histograms of the normalized distributions for the 2 columns above}
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{normed}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{40}\PY{p}{,} \PY{n+nb}{range} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{)}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{All Passengers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{skyblue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{normed}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{bins} \PY{o}{=} \PY{l+m+mi}{40}\PY{p}{,} \PY{n+nb}{range} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{80}\PY{p}{)}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{y}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Only Survivors}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Age}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Passengers and survivors}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ age distributions normalized}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_63_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  We can see from the above plots that passengers and survivors
+  distributions have more or less the same shape, in both plots. In the
+  'Age distribution in years' plot above we can also see that there is a
+  wide gap between the number of passengers and the number of survivors.
+  This seems like that there were more people who died than survived in
+  most ages. Let's try to digg in and see if this is really the case or
+  not using the function (age\_range) from the top of this document.
+\end{itemize}
+
+    \section{Survivors by age (plot)}\label{survivors-by-age-plot}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}512}]:} \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{cm} \PY{c+c1}{\PYZsh{} Colormap for the pie chart}
+          
+          \PY{c+c1}{\PYZsh{} Passengers by age group in percent pie chart}
+          \PY{n}{percent\PYZus{}sur} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{survivors}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{survivors}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{01s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{30s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{40s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{50s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{60s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{70s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{cs}\PY{o}{=}\PY{n}{cm}\PY{o}{.}\PY{n}{Set1}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{8.}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{percent\PYZus{}sur}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{cs}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                  \PY{n}{labels} \PY{o}{=} \PY{n}{labels}\PY{p}{,} \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+                 \PY{n}{explode} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{l+m+mf}{1.4}\PY{p}{)}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Survivors by age group in percent}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==========================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_66_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  After dividing the Age variable into gaps of 10 years, we can see that
+  the group ages of the 20's and 30's survival rate is the highest.
+  These two group ages also had the highest number of passengers. The
+  same thing goes to the other age groups in respect to their portion of
+  the entire population. Next, I will break down the numbers of
+  passengers and survivors by age groups and compare the percent of
+  survivors from each group to the total number of passengers in the
+  specific group. In that way, it will be easy to find out the group/s
+  with the highest\lowest rate of survival.
+\end{itemize}
+
+    \section{Age groups numbers and percents from the entire
+population}\label{age-groups-numbers-and-percents-from-the-entire-population}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}513}]:} \PY{c+c1}{\PYZsh{} Passengers by age group in numbers}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Passengers by age group in numbers}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==================================}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Ages}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Passengers by age group in percent}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of each age group from the entire population}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{====================================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{passengers} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{statsi}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{statsi}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+          \PY{n}{Group\PYZus{}percent} \PY{o}{=} \PY{p}{(}\PY{n}{passengers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{All}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{Group\PYZus{}percent}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Passengers by age group in numbers
+==================================
+
+20    260
+30    199
+10    127
+40     96
+01     69
+50     42
+60     16
+70      5
+Name: Ages, dtype: int64
+
+Percent of each age group from the entire population
+====================================================
+Ages
+01       8.48
+10      15.60
+20      31.94
+30      24.45
+40      11.79
+50       5.16
+60       1.97
+70       0.61
+All    100.00
+Name: All, dtype: float64
+
+    \end{Verbatim}
+
+    \section{Age groups numbers and percent from the survivors
+only}\label{age-groups-numbers-and-percent-from-the-survivors-only}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}514}]:} \PY{c+c1}{\PYZsh{} Percent and Number of survivors by age group}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of survivors by age group}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{percent\PYZus{}sur} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{survivors}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{survivors}\PY{o}{.}\PY{n}{Survived}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{percent\PYZus{}sur}\PY{p}{)}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of survivors by age group}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{survivors}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{survivors}\PY{o}{.}\PY{n}{Survived\PYZus{}y\PYZus{}n}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Percent of survivors by age group
+=================================
+Survived      1
+Ages           
+01        12.70
+10        15.56
+20        28.57
+30        25.08
+40        11.11
+50         5.40
+60         1.27
+70         0.32
+
+Number of survivors by age group
+================================
+Survived\_y\_n  Yes
+Ages             
+01             40
+10             49
+20             90
+30             79
+40             35
+50             17
+60              4
+70              1
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Looking closer at the data we can see that some age groups were almost
+  completely wiped out, like people older than 70 years old. This group
+  that had 5 members lost 4! The 60s group lost 3/4 of its members. From
+  16 only 4 survived. Below is another table with the number of
+  survivors from within each group:
+\end{itemize}
+
+    \section{Survival within each group
+age}\label{survival-within-each-group-age}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}515}]:} \PY{c+c1}{\PYZsh{} What is the number of survival from within each group age?}
+          \PY{n}{group\PYZus{}ages\PYZus{}surv} \PY{o}{=} \PY{n}{statsi}
+          \PY{n}{group\PYZus{}ages\PYZus{}surv} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}surv}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{group\PYZus{}ages\PYZus{}surv} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{group\PYZus{}ages\PYZus{}surv}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{group\PYZus{}ages\PYZus{}surv}\PY{o}{.}\PY{n}{Survived}\PY{p}{,}  \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of survivors from each group age}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=======================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{highlight\PYZus{}vals}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yellow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} Highlight sells in the table}
+              \PY{k}{if} \PY{n}{val} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{background\PYZhy{}color: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{color}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{None}\PY{l+s+s1}{\PYZsq{}}
+          
+          \PY{n}{group\PYZus{}ages\PYZus{}surv}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{applymap}\PY{p}{(}\PY{n}{highlight\PYZus{}vals}\PY{p}{,} \PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Number of survivors from each group age
+=======================================
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}515}]:} <pandas.io.formats.style.Styler at 0x136edb94518>
+\end{Verbatim}
+            
+    \begin{itemize}
+\tightlist
+\item
+  The largest age groups of survivors are the 20s and the 30s. This is
+  merely because they constituted the biggest group in the age
+  distribution of all passengers. But being the group that had the
+  highest number of survivors does not mean that their chances were
+  better than other age groups' members. Below are two ways to
+  demonstrate that. A table with the groups and their survival rate and
+  a bar plot with the same information:
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}516}]:} \PY{c+c1}{\PYZsh{} What is the percent of survival from within each group age?}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of survivors from within each group age}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===============================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{k}{def} \PY{n+nf}{highlight\PYZus{}vals}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yellow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} Highlight sells in the table}
+              \PY{k}{if} \PY{n}{val} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{background\PYZhy{}color: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{color}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{None}\PY{l+s+s1}{\PYZsq{}}
+          \PY{n}{group\PYZus{}ages\PYZus{}per} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}surv}
+          \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{100}\PY{o}{/}\PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{All}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age Group}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{o}{.}\PY{n}{index}
+          \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+          \PY{n}{group\PYZus{}ages\PYZus{}per}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{applymap}\PY{p}{(}\PY{n}{highlight\PYZus{}vals}\PY{p}{,} \PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Percent of survivors from within each group age
+===============================================
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}516}]:} <pandas.io.formats.style.Styler at 0x136f0b30668>
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}517}]:} \PY{c+c1}{\PYZsh{} Percent of survivors from each group age}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of survivors from within each group age:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          
+          \PY{n}{sns}\PY{o}{.}\PY{n}{factorplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age Group}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{aspect}\PY{o}{=}\PY{l+m+mi}{4}
+                         \PY{p}{,} \PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percent of survivors by group age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Percent of survivors from within each group age:
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}517}]:} <matplotlib.text.Text at 0x136eca3a710>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_77_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  From the above bar plot and crosstab table we can see that 58\% of
+  children under 10 years old survived and thus make it the age group
+  with the best survival rate.~ We can also see on the other side of the
+  plot that passengers in their 60s and 70s had less than half survival
+  rate than the rate of children under 10. This answers the cultural
+  code - children first. The rest of the age groups are close to the
+  average survival rate, which was 39\%. Now, let's try to see if there
+  was a difference in gender survival in the 1-10 years old's children:
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}518}]:} \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen} \PY{o}{=} \PY{n}{statsi}
+          \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen} \PY{o}{=} \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ages}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}
+          \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{crosstab}\PY{p}{(}\PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{o}{.}\PY{n}{Ages}\PY{p}{,} \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{o}{.}\PY{n}{Gender}\PY{p}{,}  \PY{n}{margins}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+          \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}518}]:} Gender  female  male  All
+          Ages                     
+          01          20    20   40
+\end{Verbatim}
+            
+    \begin{itemize}
+\tightlist
+\item
+  As the table above indicates, both girls and boys 0-10 years old had
+  the same survival rate.
+\end{itemize}
+
+    Section \ref{top} Section \ref{age}
+
+     \#
+
+Survivors by Fare
+
+Section \ref{top}
+
+    \subsubsection{First, checking the distribution of all the tickets that
+were
+sold:}\label{first-checking-the-distribution-of-all-the-tickets-that-were-sold}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}519}]:} \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+          
+          \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{density}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{legend}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}519}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x136ec743f60>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_84_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the above plot, we see that most of the passengers paid anywhere
+between 0 and \textasciitilde{}\$50 for a ticket. Also, we can see bumps
+in the \$200s and \$500s ticket prices. Let's take a closer look at
+those numbers:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}520}]:} \PY{c+c1}{\PYZsh{} Ticket(Fare) column basic statistics}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+count    891.00
+mean      31.79
+std       49.70
+min        0.00
+25\%        7.00
+50\%       14.00
+75\%       31.00
+max      512.00
+Name: Fare, dtype: float64
+
+    \end{Verbatim}
+
+    It seems that there is a huge difference between the max and the average
+prices of tickets. The standard deviation is bigger than the mean. There
+must be outliers, let's check if we can find them with a boxplot:
+
+    \section{Outliers who paid more than \$149 for their
+ticket}\label{outliers-who-paid-more-than-149-for-their-ticket}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}521}]:} \PY{c+c1}{\PYZsh{} Boxplot with outliers}
+          \PY{n}{data} \PY{o}{=} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{200}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+          
+          \PY{n}{plt}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{showmeans}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{vert}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ticket Prices Outliers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_89_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Most of the x axis above (showing the distribution of the ticket prices)
+is populated by outliers (in green). Next is a table with only the
+records of passengers who paid more than \$149, which are the outliers.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}522}]:} \PY{c+c1}{\PYZsh{} Who are the outliers?}
+          \PY{c+c1}{\PYZsh{} Keep only the ones that are within +3 standard deviations in the Fare column}
+          \PY{c+c1}{\PYZsh{} Any price higher than \PYZdl{}149 (+3 standard deviations) is considered an outlier}
+          
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Outliers \PYZhy{} Ticket price and the number of people who purchases in this price}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{============================================================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{outliers} \PY{o}{=} \PY{n}{statsi} \PY{c+c1}{\PYZsh{} Create a new dataframe only for outliers}
+          \PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)} \PY{c+c1}{\PYZsh{} Change teh Fare column to integer}
+          \PY{n}{outliers} \PY{o}{=} \PY{n}{outliers}\PY{p}{[}\PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{]} \PY{c+c1}{\PYZsh{} Include in the dataframe only passengers who}
+          \PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Number of outliers is 29 out of 891 passengers}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Survival rate for the outliers}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{==============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{p}{)}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Number of Outliers who survived}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{===============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)} \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Outliers - Ticket price and the number of people who purchases in this price
+============================================================================
+221    1
+247    2
+262    2
+164    2
+153    3
+512    3
+211    4
+263    4
+227    4
+151    4
+Name: Fare, dtype: int64
+
+Survival rate for the outliers
+==============================
+Yes    0.69
+No     0.31
+Name: Survived\_y\_n, dtype: float64
+
+Number of Outliers who survived
+===============================
+Yes    20
+No      9
+Name: Survived\_y\_n, dtype: int64
+
+    \end{Verbatim}
+
+    Breaking down the numbers in the Fare variable, 69 percent of the
+passengers who paid more than 149 dollars for their ticket survived! In
+numbers, it is 20 passengers who survived and 9 who did not. Also, the
+group that stands out most is the 512 dollars one: 3 passengers paid
+this sum of money, which is 128 times more expensive than the lowest
+price ticket (\$4) and 16 times more than the median price. Did those 3
+passengers survive?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}523}]:} \PY{c+c1}{\PYZsh{} 3 Top Outliers survivors}
+          \PY{k}{def} \PY{n+nf}{highlight\PYZus{}vals}\PY{p}{(}\PY{n}{val}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yellow}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} Highlight sells in the table}
+              \PY{k}{if} \PY{n}{val} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{background\PYZhy{}color: }\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{color}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{k}{return} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+          
+          \PY{c+c1}{\PYZsh{} Create and print a new DF with only the passengers who paid \PYZdl{}512}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Top 3 most expensive ticket holders survival:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{top\PYZus{}outliers} \PY{o}{=} \PY{n}{outliers}
+          \PY{n}{top\PYZus{}outliers} \PY{o}{=} \PY{n}{top\PYZus{}outliers}\PY{p}{[}\PY{n}{top\PYZus{}outliers}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{512}\PY{p}{]}
+          \PY{n}{top\PYZus{}outliers}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{applymap}\PY{p}{(}\PY{n}{highlight\PYZus{}vals}\PY{p}{,} \PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Top 3 most expensive ticket holders survival:
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}523}]:} <pandas.io.formats.style.Styler at 0x136ec2bf198>
+\end{Verbatim}
+            
+    It seems that all 3 passengers, who were in their 30s, in first class
+and paid \$512, survived. This is 100\% survival. Nevertheless, this
+doesn't mean that there is a dependency between the ticket price and
+survival since there are only 3 items in this sample. What about the
+rest of the passengers whose ticket price was more than 3 standard
+deviations above the average price? did their survival rate remain the
+same as the 'top-outliers' (100\%)? As it shows above under 'Survival
+rate for the outliers', 69\% of the Outliers who paid more than \$149
+for a ticket survived. This is a higher rate than the rate of survivors
+in general (38\%), and higher than the survival rate of females (65\%
+from all survivors) and even higher than all survivors from the first
+class (63\%) on board.
+
+    \section{All outliers survivors}\label{all-outliers-survivors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}524}]:} \PY{c+c1}{\PYZsh{} Only Outliers survivors}
+          \PY{n}{outliers\PYZus{}survivors} \PY{o}{=} \PY{n}{outliers}
+          \PY{n}{outliers\PYZus{}survivors} \PY{o}{=} \PY{n}{outliers\PYZus{}survivors}\PY{p}{[}\PY{n}{outliers\PYZus{}survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived\PYZus{}y\PYZus{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{} Outliers Gender survival}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers number of survivors by gender}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{======================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{outliers\PYZus{}survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Outliers percent of survivors by gender}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers percent of survivors by gender}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=======================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{outliers\PYZus{}survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+Outliers number of survivors by gender
+======================================
+female    17
+male       3
+Name: Gender, dtype: int64
+
+
+Outliers percent of survivors by gender
+=======================================
+female    0.85
+male      0.15
+Name: Gender, dtype: float64
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}525}]:} \PY{n}{outlier\PYZus{}fem\PYZus{}sur} \PY{o}{=} \PY{n}{outliers\PYZus{}survivors}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Gender}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}
+          
+          \PY{c+c1}{\PYZsh{} Plot of outliers percent of survivors by gender}
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+          
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}c6b6ea}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}c6dbef}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{outlier\PYZus{}fem\PYZus{}sur}\PY{p}{,} \PY{n}{shadow}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{colors}\PY{o}{=}\PY{n}{colors}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                  \PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers females Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Outliers males Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                  \PY{n}{wedgeprops} \PY{o}{=} \PY{p}{\PYZob{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linewidth}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{1} \PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{edgecolor}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Percent of outlier survivors by gender}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{=============================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_97_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    85\% of all survivors who paid more than \$149 for their ticket were
+females.
+
+    \subsection{Correlation between Fare and
+Age}\label{correlation-between-fare-and-age}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}526}]:} \PY{c+c1}{\PYZsh{} Checking the correlation between the Fare and Age variables (From Udacity class)}
+          
+          \PY{k}{def} \PY{n+nf}{correlation}\PY{p}{(}\PY{n}{var1}\PY{p}{,} \PY{n}{var2}\PY{p}{)}\PY{p}{:}
+              \PY{n}{both\PYZus{}above} \PY{o}{=} \PY{p}{(}\PY{n}{var1} \PY{o}{\PYZgt{}} \PY{n}{var1}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZam{}} \PYZbs{}
+                           \PY{p}{(}\PY{n}{var2}  \PY{o}{\PYZgt{}} \PY{n}{var2}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+              \PY{n}{both\PYZus{}below} \PY{o}{=} \PY{p}{(}\PY{n}{var1} \PY{o}{\PYZlt{}} \PY{n}{var1}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZam{}} \PYZbs{}
+                           \PY{p}{(}\PY{n}{var2} \PY{o}{\PYZlt{}} \PY{n}{var2}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+              \PY{n}{is\PYZus{}same\PYZus{}direction} \PY{o}{=} \PY{n}{both\PYZus{}above} \PY{o}{|} \PY{n}{both\PYZus{}below} \PY{c+c1}{\PYZsh{} Both above OR below the mean}
+              \PY{n}{num\PYZus{}same\PYZus{}direction} \PY{o}{=} \PY{n}{is\PYZus{}same\PYZus{}direction}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+              
+              \PY{n}{num\PYZus{}different\PYZus{}direction} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{var1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{num\PYZus{}same\PYZus{}direction}
+              \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Correlation between Age and Fare}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{================================}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{k}{return}\PY{p}{(}\PY{n}{num\PYZus{}same\PYZus{}direction}\PY{p}{,} \PY{n}{num\PYZus{}different\PYZus{}direction}\PY{p}{)}
+          
+          \PY{n}{correlation}\PY{p}{(}\PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{statsi}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Correlation between Age and Fare
+================================
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}526}]:} (496, 395)
+\end{Verbatim}
+            
+    \begin{itemize}
+\tightlist
+\item
+  We can see from the above 2 numbers that there are more pairs sharing
+  the same direction relative to their mean (either below or above the
+  mean) than pairs that have different directions (one above and one
+  below their mean). The difference between the numbers is not big
+  enough to conclude that there is strong correlation between the two
+  variables. Below is a scatter plot that demonstrate the week
+  correlation between how much people paid for a ticket and their age.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}527}]:} \PY{c+c1}{\PYZsh{} If using the Seaborn library, we can scratch a regression line for this relationship between ticket price and the age:}
+          \PY{c+c1}{\PYZsh{} The Seaborn plot here brings the Regression Line, Confidence Interval of 95\PYZpc{}}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{facecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}f7fbff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}08306b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{400}\PY{p}{,}\PY{l+m+mi}{300}\PY{p}{)}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{120}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figwidth}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{)}
+          \PY{n}{fig}\PY{o}{.}\PY{n}{set\PYZus{}figheight}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+          \PY{n}{sns}\PY{o}{.}\PY{n}{regplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Age}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Fare}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{statsi}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}527}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x136edc17390>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_102_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  This graph shows the regression line almost flat (almost 0), which
+  means that there is no correlation between those 2 variables. The
+  price of the ticket was not dependent on the age of the passenger.
+  Some young passengers in their 20s paid as much as older people in
+  their 70s.
+\end{itemize}
+
+    Section \ref{top} Section \ref{fare}
+
+     \#
+
+Summary
+
+Section \ref{top}
+
+    Who had the best chances to survive? Taking into consideration the above
+analysis and given data, we can state that:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  More females survived in numbers and in percentage than males. females
+  survival was almost twice than males survival (65\%/35\%). Moreover,
+  females who paid more than 149 dollars for a ticket had a survival
+  rate of 85\%.
+\item
+  From all age groups, 0-10 years old children had the highest
+  percentage of survivors, compare to their number in the population
+  (58\%). It was the only age group that had more survivors than losts.
+\item
+  The price of a ticket did not have much to do with the survival rate,
+  except the outliers, who paid more than \$149 per ticket and had 69\%
+  of survival.
+\item
+  Passengers from First Class survived disproportionaly to their percent
+  in the population. They were the only Class group that had more
+  survivors than losts (63\%).
+\end{enumerate}
+
+Section \ref{top} Section \ref{summary}
+
+     \#
+
+Sources
+
+Section \ref{top}
+
+    Page Name \textbar{} URL
+
+\begin{itemize}
+\item
+  Udacity Nano degree Pandas Series (and many other Udacity's course
+  materials that are not cited here)
+  https://classroom.udacity.com/nanodegrees/nd002/parts/0021345403/modules/317671873575460/lessons/5435548805/concepts/54301490320923
+\item
+  Visualizing the distribution of a dataset
+  http://seaborn.pydata.org/tutorial/distributions.html
+\item
+  Pandas options and settings
+  http://pandas.pydata.org/pandas-docs/stable/options.html
+\item
+  pandas.DataFrame.round
+  http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.round.html
+\item
+  How to make a pandas crosstab with percentAges?
+  http://stackoverflow.com/questions/21247203/how-to-make-a-pandas-crosstab-with-percentAges
+\item
+  Pandas: add crosstab totals
+  http://stackoverflow.com/questions/26932682/pandas-add-crosstab-totals
+\item
+  color example code: named\_colors.py
+  http://matplotlib.org/2.0.0b4/examples/color/named\_colors.html
+\item
+  Pandas - replacing column values
+  http://stackoverflow.com/questions/31888871/pandas-replacing-column-values
+\item
+  Pandas: Replacing column values in dataframe
+  http://stackoverflow.com/questions/23307301/pandas-replacing-column-values-in-dataframe
+\item
+  How To Convert Data Types in Python 3
+  https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-python-3
+\item
+  Setting the Title, Legend Entries, and Axis Titles in matplotlib
+  https://plot.ly/matplotlib/figure-labels/
+\item
+  count the frequency that a value occurs in a dataframe column
+  http://stackoverflow.com/questions/22391433/count-the-frequency-that-a-value-occurs-in-a-dataframe-column
+\item
+  Working with missing data
+  http://pandas.pydata.org/pandas-docs/stable/missing\_data.html
+\item
+  pandas.DataFrame.dropna
+  http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.dropna.html
+\item
+  Count of unique value in column pandas
+  http://stackoverflow.com/questions/41665659/count-of-unique-value-in-column-pandas
+\item
+  Create a Column Based on a Conditional in pandas
+  https://chrisalbon.com/python/pandas\_create\_column\_using\_conditional.html
+\item
+  Basic Data Plotting with Matplotlib Part 3: Histograms
+  https://bespokeblog.wordpress.com/2011/07/11/basic-data-plotting-with-matplotlib-part-3-histograms/
+\item
+  seaborn.FacetGrid
+  http://seaborn.pydata.org/generated/seaborn.FacetGrid.html
+\item
+  seaborn.factorplot
+  http://seaborn.pydata.org/generated/seaborn.factorplot.html\#seaborn.factorplot
+\item
+  pandas.Series.value\_counts
+  http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.value\_counts.html
+\item
+  Plotting multiple different plots in one figure using Seaborn
+  http://stackoverflow.com/questions/38082602/plotting-multiple-different-plots-in-one-figure-using-seaborn
+\item
+  Resizing matplotlib figure with set\_fig(width/height) doesn't work
+  http://stackoverflow.com/questions/31841289/resizing-matplotlib-figure-with-set-figwidth-height-doesnt-work
+\item
+  Pandas error - invalid value encountered
+  http://stackoverflow.com/questions/30519487/pandas-error-invalid-value-encountered
+\item
+  How do I use matplotlib autopct?
+  http://stackoverflow.com/questions/6170246/how-do-i-use-matplotlib-autopct
+\item
+  How to normalize index
+  http://stackoverflow.com/questions/21247203/how-to-make-a-pandas-crosstab-with-percentages
+\item
+  Random row selection in Pandas dataframe
+  http://stackoverflow.com/questions/15923826/random-row-selection-in-pandas-dataframe
+\item
+  Matplotlib screenshots https://matplotlib.org/users/screenshots.html
+\item
+  Smooth histogram from data in column in Pandas DataFrame?
+  http://stackoverflow.com/questions/35590727/smooth-histogram-from-data-in-column-in-pandas-dataframe
+\item
+  Find the unique values in a column and then sort them
+  http://stackoverflow.com/questions/32072076/find-the-unique-values-in-a-column-and-then-sort-them
+\item
+  pylab\_examples example code: boxplot\_demo.py
+  https://matplotlib.org/examples/pylab\_examples/boxplot\_demo.html
+\item
+  Matplotlib boxplot without outliers
+  https://stackoverflow.com/questions/22028064/matplotlib-boxplot-without-outliers
+\item
+  Pandas HTML Output Conditional Formatting - Highlight cell if value in
+  range
+  https://stackoverflow.com/questions/37638402/pandas-html-output-conditional-formatting-highlight-cell-if-value-in-range
+\item
+  'Could not interpret input' error with Seaborn when plotting groupbys
+  https://stackoverflow.com/questions/32908315/could-not-interpret-input-error-with-seaborn-when-plotting-groupbys
+\item
+  Udacity x\^{}2 test
+  https://classroom.udacity.com/courses/ud201/lessons/1331738563/concepts/1895400230923
+\item
+  How to Include image or picture in jupyter notebook
+  https://stackoverflow.com/questions/32370281/how-to-include-image-or-picture-in-jupyter-notebook
+\item
+  Better Plotting In Python With Seaborn
+  https://robinsones.github.io/Better-Plotting-in-Python-with-Seaborn/
+\item
+  How to reference a IPython notebook cell in markdown?
+  https://stackoverflow.com/questions/28080066/how-to-reference-a-ipython-notebook-cell-in-markdown
+\end{itemize}
+
+    Section \ref{top} Section \ref{sources}
+
+     \#
+
+Dataframes in this document
+
+Section \ref{top}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}528}]:} \PY{c+c1}{\PYZsh{} Main Dataframe}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{statsi}\PY{p}{)}\PY{p}{)}
+          \PY{n}{statsi}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}528}]:}    Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          0         0      3    male  22.0     7    0           No   20
+          1         1      1  female  38.0    71    1          Yes   30
+          2         1      3  female  26.0     7    1          Yes   20
+          3         1      1  female  35.0    53    1          Yes   30
+          4         0      3    male  35.0     8    0           No   30
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}529}]:} \PY{c+c1}{\PYZsh{} Only Survivors}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{survivors}\PY{p}{)}\PY{p}{)}
+          \PY{n}{survivors}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}529}]:}    Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          1         1      1  female  38.0    71    1          Yes   30
+          2         1      3  female  26.0     7    1          Yes   20
+          3         1      1  female  35.0    53    1          Yes   30
+          8         1      3  female  27.0    11    1          Yes   20
+          9         1      2  female  14.0    30    1          Yes   10
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}530}]:} \PY{c+c1}{\PYZsh{} Survivors by gender}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{sbg}\PY{p}{)}\PY{p}{)}
+          \PY{n}{sbg}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}530}]:}    Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          0         0      3    male  22.0     7    0           No   20
+          1         1      1  female  38.0    71    1          Yes   30
+          2         1      3  female  26.0     7    1          Yes   20
+          3         1      1  female  35.0    53    1          Yes   30
+          4         0      3    male  35.0     8    0           No   30
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}531}]:} \PY{c+c1}{\PYZsh{} Male survivors}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{sbgm}\PY{p}{)}\PY{p}{)}
+          \PY{n}{sbgm}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}531}]:}    Survived  Class Gender   Age  Fare  Sex Survived\_y\_n Ages
+          0         0      3   male  22.0     7    0           No   20
+          4         0      3   male  35.0     8    0           No   30
+          5         0      3   male  44.5     8    0           No   40
+          6         0      1   male  54.0    51    0           No   50
+          7         0      3   male   2.0    21    0           No   01
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}532}]:} \PY{c+c1}{\PYZsh{} Female survivors}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{sbgf}\PY{p}{)}\PY{p}{)}
+          \PY{n}{sbgf}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}532}]:}    Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          1         1      1  female  38.0    71    1          Yes   30
+          2         1      3  female  26.0     7    1          Yes   20
+          3         1      1  female  35.0    53    1          Yes   30
+          8         1      3  female  27.0    11    1          Yes   20
+          9         1      2  female  14.0    30    1          Yes   10
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}533}]:} \PY{c+c1}{\PYZsh{} Outliers}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{outliers}\PY{p}{)}\PY{p}{)}
+          \PY{n}{outliers}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}533}]:}      Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          27          0      1    male  19.0   263    0           No   10
+          88          1      1  female  23.0   263    1          Yes   20
+          118         0      1    male  24.0   247    0           No   20
+          258         1      1  female  35.0   512    1          Yes   30
+          268         1      1  female  58.0   153    1          Yes   50
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}534}]:} \PY{c+c1}{\PYZsh{} Top Outliers}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{top\PYZus{}outliers}\PY{p}{)}\PY{p}{)}
+          \PY{n}{top\PYZus{}outliers}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}534}]:}      Survived  Class  Gender   Age  Fare  Sex Survived\_y\_n Ages
+          258         1      1  female  35.0   512    1          Yes   30
+          679         1      1    male  36.0   512    0          Yes   30
+          737         1      1    male  35.0   512    0          Yes   30
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}535}]:} \PY{c+c1}{\PYZsh{} Outliers Survivors}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{outliers\PYZus{}survivors}\PY{p}{)}\PY{p}{)}
+          \PY{n}{outliers\PYZus{}survivors}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}535}]:}      Survived  Class  Gender    Age  Fare  Sex Survived\_y\_n  Ages
+          88          1      1  female  23.00   263    1          Yes    20
+          258         1      1  female  35.00   512    1          Yes    30
+          268         1      1  female  58.00   153    1          Yes    50
+          299         1      1  female  50.00   247    1          Yes  None
+          305         1      1    male   0.92   151    0          Yes    01
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}536}]:} \PY{c+c1}{\PYZsh{} Group Ages Survivors}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{group\PYZus{}ages\PYZus{}surv}\PY{p}{)}\PY{p}{)}
+          \PY{n}{group\PYZus{}ages\PYZus{}surv}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}536}]:} Survived    0    1  All  Percent Age Group
+          Ages                                      
+          01         29   40   69    57.97        01
+          10         78   49  127    38.58        10
+          20        170   90  260    34.62        20
+          30        120   79  199    39.70        30
+          40         61   35   96    36.46        40
+          50         25   17   42    40.48        50
+          60         12    4   16    25.00        60
+          70          4    1    5    20.00        70
+          All       499  315  814    38.70       All
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}537}]:} \PY{c+c1}{\PYZsh{} Group Ages Percent Survival}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{group\PYZus{}ages\PYZus{}per}\PY{p}{)}\PY{p}{)}
+          \PY{n}{group\PYZus{}ages\PYZus{}per}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}537}]:} Survived    0    1  All  Percent Age Group
+          Ages                                      
+          01         29   40   69    57.97        01
+          10         78   49  127    38.58        10
+          20        170   90  260    34.62        20
+          30        120   79  199    39.70        30
+          40         61   35   96    36.46        40
+          50         25   17   42    40.48        50
+          60         12    4   16    25.00        60
+          70          4    1    5    20.00        70
+          All       499  315  814    38.70       All
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}538}]:} \PY{c+c1}{\PYZsh{} Survival of males and females by decades}
+          
+          \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{type}\PY{p}{(}\PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}\PY{p}{)}\PY{p}{)}
+          \PY{n}{group\PYZus{}ages\PYZus{}per\PYZus{}gen}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}538}]:} Gender  female  male  All
+          Ages                     
+          01          20    20   40
+          10          39    10   49
+          20          61    29   90
+          30          53    26   79
+          40          23    12   35
+          50          14     3   17
+          60           3     1    4
+          70           0     1    1
+          All        213   102  315
+\end{Verbatim}
+            
+    Navigate back to: 10. Section \ref{dataframes} 9. Section \ref{sources}
+8. Section \ref{summary} 7. Section \ref{fare} 6. Section \ref{age} 5.
+Section \ref{gender} 4. Section \ref{class} 3. Section \ref{analyzing}
+2. Section \ref{discovering} 1. Section \ref{top}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
