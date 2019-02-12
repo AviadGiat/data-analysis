@@ -1,11 +1,9 @@
 ---
-title: "<center>Exploring Weather Trends<center><h2><center>Data Analysis Nano-Degree - Udacity</h2></center>"
+title: "Exploring Weather Trends<br>Data Analysis Nano-Degree - Udacity"
 author: "<center>Aviad Giat</center>"
 date: "<center>Feb 9, 2019</center>"
 output:
-  html_document: default
-  pdf_document:
-  smart: false
+  pdf_document
 
 ---
 <center><img src="world-temperature-map.png" /></center>
@@ -174,12 +172,10 @@ plot_weather <- ggplot(data = weather) +
   labs(x='Years', y='Temperature in Celsius') +
   scale_x_continuous(breaks = seq(1700, 2020, 30)) +
   scale_y_continuous(breaks = seq(0, 25, 2.5)) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
-        legend.title=element_blank())
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # plotly
-plot_weather = ggplotly(plot_weather)
-
+# plot_weather = ggplotly(plot_weather)
 # Plot
 plot_weather
 
@@ -258,14 +254,18 @@ ggplot(data=min_max, aes(x=City, y=Min, fill = City)) +
 
 
 ```
-```
+
 <br>We can see above the difference between the minimum and maximum average temperatures in the 4 cities and global average. Helsinki experienced the biggest change in temperatures (5.21 degrees) since the beginning of records, followed by London with 3.44 degrees change since the beginning of the Industrial Revolution. Here are two external charts that show changes in global temperatures for the last thousand and 800 thousand years:<br>
 
-<img src="EPICA_temperature_plot.png" /><br>
-Source: <a href="https://en.wikipedia.org/wiki/Global_temperature_record">Wikipedia</a><br><br><br>
+```{r thousands, echo=FALSE, message=FALSE, warning=FALSE, out.width = "500px"}
+  knitr::include_graphics('EPICA_temperature_plot.png')
+```
+<br>Source: <a href="https://en.wikipedia.org/wiki/Global_temperature_record">Wikipedia</a><br><br><br>
 
-<img src="Holocene_Temperature_Variations.png" /><br>
-Source: <a href="https://en.wikipedia.org/wiki/Global_temperature_record">Wikipedia</a><br><br>
+```{r hundreds, echo=FALSE, message=FALSE, warning=FALSE, out.width = "500px"}
+  knitr::include_graphics('Holocene_Temperature_Variations.png')
+```
+<br>Source: <a href="https://en.wikipedia.org/wiki/Global_temperature_record">Wikipedia</a><br><br>
 
 As can be see in the above two charts, taken from Wikipedia, the trend that we see in our exploration here might very much fit the chart of the thousand years and of the ten thousand years. From this data, it seems that we are currenly on a small heat wave of a couple of hundred years in, and we are also on the hundred thosend year pick of heat wave.
 
