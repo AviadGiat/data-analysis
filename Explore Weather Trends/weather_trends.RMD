@@ -1,11 +1,12 @@
 ---
-title: "Exploring Weather Trends<br>Data Analysis Nano-Degree - Udacity"
+title: "Exploring Weather Trends"
+subtitle: "Data Analysis Nano-Degree - Udacity"
 author: "<center>Aviad Giat</center>"
 date: "<center>Feb 9, 2019</center>"
 output:
+  html_document: default
   word_document: default
   pdf_document: default
-  html_document: default
 ---
 <center><img src="world-temperature-map.png" /></center>
 
