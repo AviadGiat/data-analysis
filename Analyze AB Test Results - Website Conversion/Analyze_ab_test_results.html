@@ -11795,23 +11795,6 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[435]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># For solving this issue with scipy</span>
-<span class="c1"># https://github.com/statsmodels/statsmodels/issues/3931</span>
-<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
-<span class="n">stats</span><span class="o">.</span><span class="n">chisqprob</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">chisq</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">chisq</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[436]:</div>
 <div class="inner_cell">
     <div class="input_area">
@@ -13756,11 +13739,11 @@ $H_{1}$ : <strong>$p_{old}$</strong> &lt; <strong>$p_{new}$</strong></p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>The null hypothesis is</strong> <br>
+<p><strong>The null and alternative hypotheses are</strong> <br>
 $H_{0}$ : $p_{new}$ - $p_{old}$ = 0<br>
-$H_{1}$ : $p_{new}$ - $p_{old}$ != 0<br><br></p>
-<p>This Logistic Regression hypothesis, with two possible results, tells us it is a two-tailed test, while the hypothesis in part II above describes a one-tailed test.<br><br></p>
-<p>The p-value here is 0.19, compare to 0.90 we came up with in part II. In both cases we will fail to reject the null, as the values are bigger than the critical value. The reason for the difference between the p-values is because of the different test.<br> **</p>
+$H_{1}$ : $p_{new}$ - $p_{old}$ != 0<br></p>
+<p><strong>This is a two-tailed test, while the hypothesis in part II above describes a one-tailed test.</strong><br></p>
+<p><strong>The p-value here is 0.19, compare to 0.90 we came up with in part II. In both cases we will fail to reject the null, as the values are bigger than the critical value. The reason for the difference between the p-values is the different method/test used.</strong><br></p>
 
 </div>
 </div>
@@ -13778,8 +13761,8 @@ $H_{1}$ : $p_{new}$ - $p_{old}$ != 0<br><br></p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Adding new factors that might correlate to the dependent factor can help with better predicting the result and a higher r-squared. An example for that might be timestamp variable from the existing dataframe. This can be used to check days of the week that have more conversions or the hours during the day. 
-Issue that might come up with adding new variables to a regression model can be Multicullinearity. This is when the x variables are correlated to each other, which can lead to flip progression coefficient and misinterpretation of the results.</p>
+<p><strong>Adding new factors that might correlate to the dependent factor can help with better predicting the result and a higher r-squared. An example for that might be the existing timestamp variable., which can be used to check days of the week that have more conversions, or which hours during the day conversions occur more frequently. <br>
+Issue that might come up with adding new variables to a Logistic Regression model can be Multicullinearity. This is when the x variables are correlated to each other, which can lead to flip progression coefficient and misinterpretation of the results.</strong></p>
 
 </div>
 </div>
@@ -13796,15 +13779,131 @@ Issue that might come up with adding new variables to a regression model can be 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[507]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">countries_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./countries.csv&#39;</span><span class="p">)</span>
-<span class="n">df_new</span> <span class="o">=</span> <span class="n">countries_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span> <span class="c1">#Merging 2 data frames with index as user_id</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">countries_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;countries.csv&#39;</span><span class="p">)</span>
+<span class="n">df_new</span> <span class="o">=</span> <span class="n">countries_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
 <span class="n">df_new</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[507]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>timestamp</th>
+      <th>group</th>
+      <th>landing_page</th>
+      <th>converted</th>
+      <th>ab_page</th>
+      <th>(treatment, control)</th>
+      <th>intercept</th>
+    </tr>
+    <tr>
+      <th>user_id</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>834778</th>
+      <td>UK</td>
+      <td>2017-01-14 23:08:43.304998</td>
+      <td>control</td>
+      <td>old_page</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>928468</th>
+      <td>US</td>
+      <td>2017-01-23 14:44:16.387854</td>
+      <td>treatment</td>
+      <td>new_page</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>822059</th>
+      <td>UK</td>
+      <td>2017-01-16 14:04:14.719771</td>
+      <td>treatment</td>
+      <td>new_page</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>711597</th>
+      <td>UK</td>
+      <td>2017-01-22 03:14:24.763511</td>
+      <td>control</td>
+      <td>old_page</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>710616</th>
+      <td>UK</td>
+      <td>2017-01-16 13:14:44.000513</td>
+      <td>treatment</td>
+      <td>new_page</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13821,7 +13920,7 @@ Issue that might come up with adding new variables to a regression model can be 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[491]:</div>
+<div class="prompt input_prompt">In&nbsp;[508]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">countries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;countries.csv&#39;</span><span class="p">)</span>
@@ -13839,7 +13938,7 @@ Issue that might come up with adding new variables to a regression model can be 
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[491]:</div>
+<div class="prompt output_prompt">Out[508]:</div>
 
 
 
@@ -13929,43 +14028,7 @@ Issue that might come up with adding new variables to a regression model can be 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[494]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_countries</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[494]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>US    206364
-UK     73419
-CA     14695
-Name: country, dtype: int64</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[501]:</div>
+<div class="prompt input_prompt">In&nbsp;[510]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_countries</span><span class="p">[[</span><span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;UK&#39;</span><span class="p">,</span> <span class="s1">&#39;US&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_countries</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">])</span>
@@ -13985,7 +14048,7 @@ Name: country, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[501]:</div>
+<div class="prompt output_prompt">Out[510]:</div>
 
 
 
@@ -14099,7 +14162,7 @@ Name: country, dtype: int64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[503]:</div>
+<div class="prompt input_prompt">In&nbsp;[511]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="p">(</span><span class="n">df_countries</span><span class="p">[</span><span class="s1">&#39;converted&#39;</span><span class="p">],</span> <span class="n">df_countries</span><span class="p">[[</span><span class="s1">&#39;intercept&#39;</span><span class="p">,</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;UK&#39;</span><span class="p">]])</span>
@@ -14130,7 +14193,7 @@ Name: country, dtype: int64</pre>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[503]:</div>
+<div class="prompt output_prompt">Out[511]:</div>
 
 
 
@@ -14150,7 +14213,7 @@ Name: country, dtype: int64</pre>
   <th>Date:</th>          <td>Thu, 28 Feb 2019</td> <th>  Pseudo R-squ.:     </th>  <td>1.205e-05</td> 
 </tr>
 <tr>
-  <th>Time:</th>              <td>01:30:17</td>     <th>  Log-Likelihood:    </th> <td>-1.0785e+05</td>
+  <th>Time:</th>              <td>02:46:44</td>     <th>  Log-Likelihood:    </th> <td>-1.0785e+05</td>
 </tr>
 <tr>
   <th>converged:</th>           <td>True</td>       <th>  LL-Null:           </th> <td>-1.0785e+05</td>
@@ -14185,7 +14248,7 @@ Name: country, dtype: int64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Looking at the above results after adding the countries to the Logistic Regression we can see that the p-values in both Canada and the United Kingdom are higher than the critical value. This means that we fail to reject the null and the new page did not do better in conversion compare to the old page, thus we will leave the old page.</p>
+<p><strong>Looking at the above results after adding the countries to the Logistic Regression we can see that the p-values in both Canada and the United Kingdom are higher than the critical value. This means that we fail to reject the null and the new page did not do better in conversion compare to the old page, thus we will leave the old page. </strong></p>
 
 </div>
 </div>
