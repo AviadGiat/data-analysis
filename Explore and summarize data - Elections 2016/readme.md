@@ -3,7 +3,7 @@ Version: 1.0<br>
 
 <img src="2016 elections finance1.jpg" />
 
-<br>The full analysis of this project (All.html) can be read as on my <a href ="https://u4see.org/data/2016-elections/all.html">website</a>, or downloaded from here. Github won't let you open the file here due to its large size.<br>
+<br>The full analysis of this project (all.html) can be read as on my <a href ="https://u4see.org/data/2016-elections/all.html">website</a>, or downloaded from here. Github won't let you open the file here due to its large size.<br>
 
 The main dataset used in this project was downloaded from the <a href ="https://classic.fec.gov/disclosurep/PDownload.do">EFC website</a> and is called '2016 Presidential Campaign Finance' (ALL.zip).<br>
 
