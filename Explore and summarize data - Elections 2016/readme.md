@@ -1,5 +1,5 @@
 Version: 1.0<br>
-<h1> Exploratory Data Analysis - 2016 Elections Finance</h1>
+<h1> Exploratory Data Analysis - 2016 Elections & Campaign Finance</h1>
 
 <img src="2016 elections finance1.jpg" />
 
