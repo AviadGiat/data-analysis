@@ -24,11 +24,11 @@ I also added completing data from other sources to achieve better and more accur
 
 ## Files in this project
 This project has 5 main files.<br>
-<a href="Exploration1.ipynb">Exploration 1 - Has all the data wrangling.<br>
-<a href="Exploration2.ipynb">Exploration 2 - Uni-variant exploration<br>
-<a href="Exploration3.ipynb">Exploration 3 - Bi-variant exploration<br>
-<a href="Exploration4.ipynb">Exploration 4 - Multi-variant exploration<br>
-<a href="Presentation.slides.html">Presentation - The Explanatory part of this project<br>
+<a href="Exploration1.ipynb">Exploration 1</a> - Has all the data wrangling.<br>
+<a href="Exploration2.ipynb">Exploration 2</a> - Uni-variant exploration<br>
+<a href="Exploration3.ipynb">Exploration 3</a> - Bi-variant exploration<br>
+<a href="Exploration4.ipynb">Exploration 4</a> - Multi-variant exploration<br>
+<a href="Presentation.slides.html">Presentation</a> - The Explanatory part of this project<br>
 
 
 
