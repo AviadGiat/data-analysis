@@ -2,8 +2,18 @@
 ## By Aviad Giat
 
 
-## Dataset
 
+## Investigation Overview
+In this analysis, I will look into the 2018 Democratic primaries elections' statistics and find how the progressive movement's candidates did with winning (or losing) the combats. I will also try to find outstanding data about those elections and investigate them deeper if I find them interesting for the common knowledge. 
+
+
+
+## Main Motivation
+As an avid politics follower, I would like to learn interesting statistics about the 2018 Democratic Primaries and find outstanding data that can shade light on those elections. More specifically, inspect the Progressive movement's performances accross different topics/variables, as individual candidates and as pacs (Political Action Committees).
+
+
+
+## Dataset
 I obtained the data used in this analysis from Five Thirty Eight's <a href="https://github.com/fivethirtyeight/data/tree/master/primary-candidates-2018">Github repository</a>.<br>
 I also added completing data from other sources to achieve better and more accurate analysis.<br> More information about them in the Exploration 1 file.<br>
 <a href="https://ballotpedia.org/Endorsements_by_Joe_Biden">Joe Biden missing data (from ballotpedia.org)</a>
@@ -21,8 +31,8 @@ Exploration 4 - Multi-variant exploration<br>
 Presentation - The Explanatory part of this project<br>
 
 
-## Summary of Findings
 
+## Summary of Findings
 In the exploration of the data I found the followings:
 Guns Sense was the pac that endorsed the highest number of candidates, 193. Joe Biden took the second place and Our Revolution was the third with 98 endorsements. From politicians who endorsed candidates publicly, Biden came out the first.<br><br>
 
@@ -40,7 +50,6 @@ When comparing the Percent of Votes of the Party Support and the 3 Progressive p
 
 
 ## Key Insights for Presentation
-
 In the Presentation I focused more on the Progressive candidates and pacs, yet, incorporated general information about the rest of the candidates and pacs that completed the picture for the Progressives and seemed to me interesting for common knowledge.<br>
 I built the presentation both wide and long. I made from each of the main variables and the supporting variables a slide, which then had sub-slides with bi and multi vaiant analysis. I also made sure that each of the main and supporting variables has a unique color to be able to follow the analysis easier.
 
