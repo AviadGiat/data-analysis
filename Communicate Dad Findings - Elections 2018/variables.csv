@@ -1,0 +1,10 @@
+﻿Variable,Description
+Candidate,"All candidates who received votes in 2018’s Democratic primary elections for U.S. Senate, U.S. House and governor in which no incumbent ran. *"
+State,The state in which the candidate ran. *
+Primary Percent,The percentage of the vote received by the candidate in his or her primary.  Unopposed candidates and candidates nominated by convention (not primary) are given a primary percentage of 100 but were excluded from our analysis involving vote share. **
+Won,“Yes” if the candidate won his or her primary and has advanced to November; “No” if he or she lost.
+Race,“White” if we identified the candidate as non-Hispanic white; “Nonwhite” if we identified the candidate as Hispanic and/or any nonwhite race; blank if we could not identify the candidate’s race or ethnicity.
+Endorsements,"A political action committee that endorsed the candidate. Some candidates were endorsed by different pacs and appear as individual rows in the dataset. Under this column, there are also endorsers that are not pacs, rather politicians who're endorsements are significant enough to be added to the 538's analysis."
+ Progressive,"""Yes"", if the candidate was a Progressive one."
+*,Supplied by Ballotpedia.
+**,"Numbers come from official results posted by the secretary of state or local elections authority; if those were unavailable, they used unofficial election results from the New York Times."

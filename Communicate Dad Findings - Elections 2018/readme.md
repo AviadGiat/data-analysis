@@ -24,7 +24,7 @@ Presentation - The Explanatory part of this project
 ## Summary of Findings
 
 > In the exploration of the data I found the followings:
-Guns Sense was the pac that endorsed the highest numbre of candidates (193). On the same time I found that Bernie Sanders and Joe Biden had 10 or less endorsements, which seemd odd to me. After adding their missing data Bernie came up with 26 endorsements and Biden too the seond place from Our Revolution with 98 endorsements. From politicians who endorsed candidates publically, Biden came out the first.
+Guns Sense was the pac that endorsed the highest numbre of candidates,193. Joe Biden took the seond place and Our Revolution was the third with 98 endorsements. From politicians who endorsed candidates publically, Biden came out the first.
 Interesting to learn from the data exploration that the DCCC (Democratic Party endorsements) endorsed only 22 candidates. Nevertheless, when examining this pac's success rate, they had the best one from all pacs with 91%. Here I also found that there is no correlation between how well a pac did, as percent of success from their own pool of candidates running, and the number of endorsements they had. On the other hand, as pacs had more endorsements, they had more winnings, with a very strong correlation.
 Progressive candidates comprised 12.5% of the total candidates population (105 out of 839).
 Progressives won in 46 different primaries from 264 combats that ended with winnings, which is 5.5% success rate.

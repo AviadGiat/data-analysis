@@ -1,2 +1,7 @@
-cd Google Drive\Studies\Data Analysis\Data Visualization\Data Visualizations with Python\Explanatory Visualizations\project
+# Access the ipynb folder final
+
+cd Google Drive\Git-Workflow\data-analysis\Communicate Dad Findings - Elections 2018
+
+# Render the HTML file
+
 jupyter nbconvert Presentation.ipynb --to slides --post serve --template output_toggle
