@@ -1,7 +1,9 @@
 # 2018 Elections - Progressive Victories in the Democratic party
 ## By Aviad Giat
 
-
+## Find this project on
+<a href="https://github.com/AviadGiat/data-analysis/tree/master/Communicate%20Dad%20Findings%20-%20Elections%202018">Github</a>
+<a href="https://u4see.org/data/2018-elections/Presentation.slides.html">u4see</a>
 
 ## Investigation Overview
 In this analysis, I will look into the 2018 Democratic primaries elections' statistics and find how the progressive movement's candidates did with winning (or losing) the combats. I will also try to find outstanding data about those elections and investigate them deeper if I find them interesting for the common knowledge. 
