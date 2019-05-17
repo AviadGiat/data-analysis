@@ -2,7 +2,7 @@
 ## By Aviad Giat
 
 ## Find this project on
-<a href="https://github.com/AviadGiat/data-analysis/tree/master/Communicate%20Dad%20Findings%20-%20Elections%202018">Github</a>
+<a href="https://github.com/AviadGiat/data-analysis/tree/master/Communicate%20Dad%20Findings%20-%20Elections%202018">Github</a><br>
 <a href="https://u4see.org/data/2018-elections/Presentation.slides.html">u4see</a>
 
 ## Investigation Overview
