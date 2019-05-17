@@ -11,7 +11,7 @@ In this analysis, I will look into the 2018 Democratic primaries elections' stat
 
 
 ## Main Motivation
-As an avid politics follower, I would like to learn interesting statistics about the 2018 Democratic Primaries and find outstanding data that can shed light on those elections. More specifically, inspect the Progressive movement's performances across different topics/variables, as individual candidates and as pacs (Political Action Committees).
+As an avid politics follower, I would like to learn interesting statistics about the 2018 Democratic Primaries and find details that can shade light on those elections. More specifically, inspect the Progressive movement's performances accross different topics/variables, as individual candidates and as pacs (Political Action Committees).
 
 
 
