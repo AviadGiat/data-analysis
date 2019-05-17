@@ -20,7 +20,7 @@ I obtained the data used in this analysis from Five Thirty-Eight's <a href="http
 I also added completing data from other sources to achieve better and more accurate analysis.<br> More information about them in the Exploration 1 file.<br>
 <a href="https://ballotpedia.org/Endorsements_by_Joe_Biden">Joe Biden missing data (from ballotpedia.org)</a><br>
 <a href="https://ballotpedia.org/Endorsements_by_Bernie_Sanders">Bernie Sanders missing data (from ballotpedia.org)</a><br>
-<a href="https://gunsensevoter.org/endorsed-2018/">Guns Sens missing data (from their own website</a>
+<a href="https://gunsensevoter.org/endorsed-2018/">Guns Sens missing data (from their own website)</a>
 
 
 
