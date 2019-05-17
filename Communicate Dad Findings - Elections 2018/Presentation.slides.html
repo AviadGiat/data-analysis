@@ -13311,7 +13311,7 @@ The colored symbols above, throughout the presentation, are not clickable.</font
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Main-Motivation">Main Motivation<a class="anchor-link" href="#Main-Motivation">&#182;</a></h2><p>As an avid politics follower, I would like to learn interesting statistics about the 2018 Democratic Primaries and find outstanding data that can shade light on those elections. More specifically, inspect the Progressive movement's performances accross different topics/variables, as individual candidates and as pacs (Political Action Committees).</p>
+<h2 id="Main-Motivation">Main Motivation<a class="anchor-link" href="#Main-Motivation">&#182;</a></h2><p>As an avid politics follower, I would like to learn interesting statistics about the 2018 Democratic Primaries and find details that can shed light on those elections. More specifically, inspect the Progressive movement's performances across different topics/variables, as individual candidates and as pacs (Political Action Committees).</p>
 <p><font color="#63BDEF">►</font> <a href="#/2">Top</a></p>
 
 </div>
@@ -13320,20 +13320,13 @@ The colored symbols above, throughout the presentation, are not clickable.</font
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Dataset-Overview">Dataset Overview<a class="anchor-link" href="#Dataset-Overview">&#182;</a></h2><p>The main dataset I used for this analysis has 1379 observations (rows) representing the 2018 Democratic primaries elections' candidates and 15 variables (columns) with information about each observation, like their state, endorsements, if they are progressive, etc. More about the dataset and the preliminary wrangling can be found in the Exploration1 file. <font color="#b4c93e">▼</font></p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Dataset-Sources">Dataset Sources<a class="anchor-link" href="#Dataset-Sources">&#182;</a></h2><p>I obtained the main dataset used in this analysis from Five Thirty Eight's <a target="_blank" href="https://github.com/fivethirtyeight/data/tree/master/primary-candidates-2018">Github repository</a>.<br>
+<h2 id="Dataset-Overview">Dataset Overview<a class="anchor-link" href="#Dataset-Overview">&#182;</a></h2><p>The main dataset I used for this analysis has 1379 observations (rows) representing the 2018 Democratic primaries elections' candidates and 15 variables (columns) with information about each observation, like their state, endorsements, if they are progressive, etc. More about the dataset and the preliminary wrangling can be found in the <a href="Exploration1.ipynb">Exploration 1</a> file.</p>
+<h2 id="Dataset-Sources">Dataset Sources<a class="anchor-link" href="#Dataset-Sources">&#182;</a></h2><p>I obtained the main dataset used in this analysis from Five Thirty-Eight's <a target="_blank" href="https://github.com/fivethirtyeight/data/tree/master/primary-candidates-2018">Github repository</a>.<br>
 I also added completing data from other sources, like <a target="_blank" href="https://ballotpedia.org/Endorsements_by_Joe_Biden">Ballotpedia</a>, to achieve better and more accurate analysis. More information about them in the <a href="Exploration1.ipynb">Exploration1</a> file, under <a href="Exploration1.ipynb#Add-missing-Guns-Sense-endorsements">Add missing Guns Sense endorsements</a> and under <a href="Exploration1.ipynb#Add-Bernie-Sanders-and-Joe-Biden-missing-endorsements">Add Bernie Sanders and Joe Biden missing endorsements</a>. <font color="#63BDEF">►</font> <a href="#/2">Top</a></p>
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13486,7 +13479,8 @@ Image by: J. Scott Applewhite-AP</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Progressive candidates do not accept contributions from big donors, whereas other candidates collect contribution from corporations, like Big Pharma, the Armament Insdustry, Big Oil, etc. <br>
+<p>Progressive candidates are ones who generally agree with the <a href="http://www.justicedemocrats.com/issues">Justice Democrats platform</a>, which is supporting issues like the Green New Deal, Secure Living Wage, Medicate For All, Defend Net Neutrality, and many other Social-Democratic topics.<br>
+Progressive candidates do not accept contributions from big donors, whereas other candidates do collect contribution from corporations, like Big Pharma, the Armament Industry, Big Oil, etc. <br>
 Pacs that support ONLY progressive candidates are: "Our Revolution", "Justice Democrats" and "PCCC" (Progressive Change Campaign Committee), thus their candidates were marked here as "Progressives". <font color="#63BDEF">►</font> <a href="#/2">Top</a></p>
 
 </div>
@@ -13781,7 +13775,131 @@ The Democratic Party Support was not ranked high in this list (2nd from the bott
 
 </div>
 </div>
-</div></section><section>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input_hidden">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print table of Pac, Percent Success, Winnings and Endorsements</span>
+<span class="k">def</span> <span class="nf">highlight_max</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">is_max</span> <span class="o">=</span> <span class="n">s</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;background-color: #85ad0c&#39;</span> <span class="k">if</span> <span class="n">v</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">is_max</span><span class="p">]</span>
+<span class="n">success</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">highlight_max</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Percent Success&#39;</span><span class="p">,</span><span class="s1">&#39;Winnings&#39;</span><span class="p">,</span> <span class="s1">&#39;Endorsements&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[105]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<style  type="text/css" >
+    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col1 {
+            background-color:  #85ad0c;
+        }    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col2 {
+            background-color:  #85ad0c;
+        }    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col3 {
+            background-color:  #85ad0c;
+        }</style><table id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6b" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Pac</th>        <th class="col_heading level0 col1" >Percent Success</th>        <th class="col_heading level0 col2" >Winnings</th>        <th class="col_heading level0 col3" >Endorsements</th>    </tr></thead><tbody>
+                <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row0" class="row_heading level0 row0" >0</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col0" class="data row0 col0" >Party Support?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col1" class="data row0 col1" >91</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col2" class="data row0 col2" >20</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col3" class="data row0 col3" >22</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row1" class="row_heading level0 row1" >1</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col0" class="data row1 col0" >PCCC Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col1" class="data row1 col1" >64</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col2" class="data row1 col2" >7</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col3" class="data row1 col3" >11</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row2" class="row_heading level0 row2" >2</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col0" class="data row2 col0" >Biden Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col1" class="data row2 col1" >63</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col2" class="data row2 col2" >62</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col3" class="data row2 col3" >98</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row3" class="row_heading level0 row3" >3</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col0" class="data row3 col0" >Indivisible Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col1" class="data row3 col1" >60</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col2" class="data row3 col2" >24</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col3" class="data row3 col3" >40</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row4" class="row_heading level0 row4" >4</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col0" class="data row4 col0" >Emily Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col1" class="data row4 col1" >53</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col2" class="data row4 col2" >17</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col3" class="data row4 col3" >32</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row5" class="row_heading level0 row5" >5</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col0" class="data row5 col0" >WFP Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col1" class="data row5 col1" >48</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col2" class="data row5 col2" >14</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col3" class="data row5 col3" >29</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row6" class="row_heading level0 row6" >6</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col0" class="data row6 col0" >Guns Sense Candidate?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col1" class="data row6 col1" >46</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col2" class="data row6 col2" >94</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col3" class="data row6 col3" >206</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row7" class="row_heading level0 row7" >7</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col0" class="data row7 col0" >VoteVets Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col1" class="data row7 col1" >45</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col2" class="data row7 col2" >10</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col3" class="data row7 col3" >22</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row8" class="row_heading level0 row8" >8</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col0" class="data row8 col0" >Sanders Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col1" class="data row8 col1" >38</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col2" class="data row8 col2" >10</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col3" class="data row8 col3" >26</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row9" class="row_heading level0 row9" >9</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col0" class="data row9 col0" >Justice Dems Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col1" class="data row9 col1" >31</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col2" class="data row9 col2" >15</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col3" class="data row9 col3" >48</td>
+            </tr>
+            <tr>
+                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row10" class="row_heading level0 row10" >10</th>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col0" class="data row10 col0" >Our Revolution Endorsed?</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col1" class="data row10 col1" >29</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col2" class="data row10 col2" >24</td>
+                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col3" class="data row10 col3" >82</td>
+            </tr>
+    </tbody></table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14080,131 +14198,7 @@ Next, I will zoom in the above plot and see if there are any familiar names at t
 
 </div>
 </div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input_hidden">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[105]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Print table of Pac, Percent Success, Winnings and Endorsements</span>
-<span class="k">def</span> <span class="nf">highlight_max</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-    <span class="n">is_max</span> <span class="o">=</span> <span class="n">s</span> <span class="o">==</span> <span class="n">s</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;background-color: #85ad0c&#39;</span> <span class="k">if</span> <span class="n">v</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">is_max</span><span class="p">]</span>
-<span class="n">success</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">highlight_max</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Percent Success&#39;</span><span class="p">,</span><span class="s1">&#39;Winnings&#39;</span><span class="p">,</span> <span class="s1">&#39;Endorsements&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[105]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<style  type="text/css" >
-    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col1 {
-            background-color:  #85ad0c;
-        }    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col2 {
-            background-color:  #85ad0c;
-        }    #T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col3 {
-            background-color:  #85ad0c;
-        }</style><table id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6b" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Pac</th>        <th class="col_heading level0 col1" >Percent Success</th>        <th class="col_heading level0 col2" >Winnings</th>        <th class="col_heading level0 col3" >Endorsements</th>    </tr></thead><tbody>
-                <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row0" class="row_heading level0 row0" >0</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col0" class="data row0 col0" >Party Support?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col1" class="data row0 col1" >91</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col2" class="data row0 col2" >20</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow0_col3" class="data row0 col3" >22</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row1" class="row_heading level0 row1" >1</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col0" class="data row1 col0" >PCCC Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col1" class="data row1 col1" >64</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col2" class="data row1 col2" >7</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow1_col3" class="data row1 col3" >11</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row2" class="row_heading level0 row2" >2</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col0" class="data row2 col0" >Biden Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col1" class="data row2 col1" >63</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col2" class="data row2 col2" >62</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow2_col3" class="data row2 col3" >98</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row3" class="row_heading level0 row3" >3</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col0" class="data row3 col0" >Indivisible Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col1" class="data row3 col1" >60</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col2" class="data row3 col2" >24</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow3_col3" class="data row3 col3" >40</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row4" class="row_heading level0 row4" >4</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col0" class="data row4 col0" >Emily Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col1" class="data row4 col1" >53</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col2" class="data row4 col2" >17</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow4_col3" class="data row4 col3" >32</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row5" class="row_heading level0 row5" >5</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col0" class="data row5 col0" >WFP Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col1" class="data row5 col1" >48</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col2" class="data row5 col2" >14</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow5_col3" class="data row5 col3" >29</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row6" class="row_heading level0 row6" >6</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col0" class="data row6 col0" >Guns Sense Candidate?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col1" class="data row6 col1" >46</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col2" class="data row6 col2" >94</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow6_col3" class="data row6 col3" >206</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row7" class="row_heading level0 row7" >7</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col0" class="data row7 col0" >VoteVets Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col1" class="data row7 col1" >45</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col2" class="data row7 col2" >10</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow7_col3" class="data row7 col3" >22</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row8" class="row_heading level0 row8" >8</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col0" class="data row8 col0" >Sanders Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col1" class="data row8 col1" >38</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col2" class="data row8 col2" >10</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow8_col3" class="data row8 col3" >26</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row9" class="row_heading level0 row9" >9</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col0" class="data row9 col0" >Justice Dems Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col1" class="data row9 col1" >31</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col2" class="data row9 col2" >15</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow9_col3" class="data row9 col3" >48</td>
-            </tr>
-            <tr>
-                        <th id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6blevel0_row10" class="row_heading level0 row10" >10</th>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col0" class="data row10 col0" >Our Revolution Endorsed?</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col1" class="data row10 col1" >29</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col2" class="data row10 col2" >24</td>
-                        <td id="T_0fcc8e08_785a_11e9_9510_e09d31cd9d6brow10_col3" class="data row10 col3" >82</td>
-            </tr>
-    </tbody></table>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></div></section><section>
+</div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
